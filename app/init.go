@@ -1,6 +1,8 @@
 package app
 
 import (
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 	"github.com/revel/revel"
 )
 
@@ -10,6 +12,8 @@ var (
 
 	// BuildTime revel app build-time (ldflags)
 	BuildTime string
+
+	Db *sqlx.DB
 )
 
 func init() {
@@ -36,19 +40,20 @@ func init() {
 	revel.OnAppStart(FillCache)
 }
 
+func InitDB() {
+	var err error
+	dns := revel.Config.StringDefault("db.connect", "root:root@locahost/test")
+	Db, err = sqlx.Connect("mysql", dns)
+	if err != nil {
+		revel.RevelLog.Fatal("database connect failed")
+	}
+}
 
-func InitDB()  {
-	//driver := revel.Config.StringDefault("db.driver", "mysql")
-	//conStr := revel.Config.StringDefault("db.connect", "root:root@locahost/test")
+func FillCache() {
 
 }
 
-func FillCache()  {
-
-}
-
-
-func InitWebpack()  {
+func InitWebpack() {
 
 }
 

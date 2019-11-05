@@ -15,3 +15,7 @@ type BaseController struct {
 func (c App) Index() revel.Result {
 	return c.Render()
 }
+
+func (c App) Login() revel.Result {
+	return c.Render()
+}

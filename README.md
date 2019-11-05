@@ -1,7 +1,14 @@
-# Welcome to Revel
+# Welcome to Gomin
 
-A high-productivity web framework for the [Go language](http://www.golang.org/).
+A high-productivity web for blog.
 
+It using framework https://revel.github.io/
+
+### Install go dep
+
+```
+go get github.com/golang/dep/cmd/dep 
+```
 
 ### Start the web server:
 
