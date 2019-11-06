@@ -1,9 +1,13 @@
 package app
 
 import (
+	"bufio"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/revel/revel"
+	"os"
+	"os/exec"
 )
 
 var (
@@ -35,9 +39,9 @@ func init() {
 	}
 
 	// Register startup functions with OnAppStart
-	revel.OnAppStart(InitWebpack)
+	//revel.OnAppStart(InitWebpack)
 	revel.OnAppStart(InitDB)
-	revel.OnAppStart(FillCache)
+	//revel.OnAppStart(FillCache)
 }
 
 func InitDB() {
@@ -54,7 +58,17 @@ func FillCache() {
 }
 
 func InitWebpack() {
-
+	goPath := os.Getenv("GOPATH")
+	cmd := exec.Command("npm", "run", "watch")
+	cmd.Dir = fmt.Sprintf(`%v/src/gomin/builder`, goPath)
+	cmdReader, _ := cmd.StdoutPipe()
+	scanner := bufio.NewScanner(cmdReader)
+	go func() {
+		for scanner.Scan() {
+			revel.AppLog.Info(scanner.Text())
+		}
+	}()
+	cmd.Start()
 }
 
 // HeaderFilter adds common security headers
