@@ -10,15 +10,15 @@
 <script>
 export default {
   components: {
-
+    'Editor': () => import('../../components/widgets/Editor')
   },
   data() {
     return {
+
     };
   },
   created() {
-    this.$emit('slot-footer', () => import( '@/views/post/post_footer'));
-    
+
   },
   mounted() {
     

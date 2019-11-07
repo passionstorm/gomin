@@ -44,7 +44,7 @@ module.exports = {
     port: 8080,
   },
   entry: {
-    'app': './admin/js/app.js',
+    'app': './admin/js/main.js',
   },
   output: {
     path: path.resolve(__dirname, '../../public/js/admin'),
@@ -54,7 +54,7 @@ module.exports = {
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('js/vue'),
+       "@$": resolve('admin/js/vue'),
       '_c': resolve('js/vue/components'),
       '_w': resolve('js/vue/components/widgets'),
     },
