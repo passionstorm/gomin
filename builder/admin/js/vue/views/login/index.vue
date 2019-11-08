@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import Card from '../../components/widgets/Card';
+  import Card from '../../widgets/Card';
 
   export default {
     components: {

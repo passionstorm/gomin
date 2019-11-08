@@ -2,21 +2,21 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from '../components/layouts/DefaultLayout';
 import store from '../store';
-import { getToken } from '../utils/auth'
-
-const whiteList = ['/login', '/auth-redirect']
+import {getToken} from '../utils/auth';
 
 Vue.use(Router);
 
 export const constantRoutes = [
   {
     path: '/login',
+    meta: {title: 'login'},
     component: () => import('../views/login/index'),
     hidden: true,
   },
   {
     path: '/',
     component: Layout,
+    type: 'bar',
     redirect: '/dashboard',
     children: [
       {
@@ -26,7 +26,7 @@ export const constantRoutes = [
         meta: {
           title: 'Home', group: 'apps',
           roles: ['admin', 'editor'],
-          icon: '<svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>',
+          icon: '',
         },
       },
     ],
@@ -56,6 +56,7 @@ export const asyncRoutes = [
   {
     path: '/post',
     component: Layout,
+    type: 'bar',
     children: [
       {
         path: 'index',
@@ -64,7 +65,83 @@ export const asyncRoutes = [
           noCache: true,
           title: 'Bài viết', group: 'apps',
           roles: ['admin', 'editor'],
-          icon: '<svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none"/></svg>',
+          icon: '',
+        },
+        component: () => import('../views/post/post'),
+      },
+    ],
+  },
+  {
+    path: '/menu',
+    meta: {title: "menu"},
+    component: Layout,
+    type: 'bar',
+    children: [
+      {
+        path: 'menu1',
+        name: 'menu1',
+        meta: {
+          noCache: true,
+          title: 'menu1',
+          roles: ['admin', 'editor'],
+        },
+        component: () => import('../views/post/post'),
+      },
+      {
+        path: 'menu2',
+        name: 'menu2',
+        meta: {
+          noCache: true,
+          title: 'menu2',
+          roles: ['admin', 'editor'],
+        },
+        component: () => import('../views/post/post'),
+      },
+      {
+        path: 'menu3',
+        name: 'menu3',
+        meta: {
+          noCache: true,
+          title: 'menu3',
+          roles: ['admin', 'editor'],
+        },
+        component: () => import('../views/post/post'),
+      },
+    ],
+  },
+  {
+    path: '/menu',
+    meta: {title: "menu"},
+    component: Layout,
+    type: 'bar',
+    children: [
+      {
+        path: 'menu1',
+        name: 'menu1',
+        meta: {
+          noCache: true,
+          title: 'menu1',
+          roles: ['admin', 'editor'],
+        },
+        component: () => import('../views/post/post'),
+      },
+      {
+        path: 'menu2',
+        name: 'menu2',
+        meta: {
+          noCache: true,
+          title: 'menu2',
+          roles: ['admin', 'editor'],
+        },
+        component: () => import('../views/post/post'),
+      },
+      {
+        path: 'menu3',
+        name: 'menu3',
+        meta: {
+          noCache: true,
+          title: 'menu3',
+          roles: ['admin', 'editor'],
         },
         component: () => import('../views/post/post'),
       },
@@ -79,17 +156,20 @@ const createRouter = () => new Router({
 });
 
 const router = createRouter();
+
 // console.log("ahncsbhncsdndjn");
 export function resetRouter() {
   const newRouter = createRouter();
   router.matcher = newRouter.matcher; // reset router
 }
+
+const whiteList = ['/login', '/auth-redirect'];
+
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   // document.title = getPageTitle(to.meta.title)
-
   // determine whether the user has logged in
-  const hasToken = getToken()
+  const hasToken = getToken();
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
@@ -106,10 +186,11 @@ router.beforeEach(async (to, from, next) => {
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const {roles} = await store.dispatch('user/getInfo');
           // generate accessible routes map based on roles
-          const accessRoutes = await store.dispatch('permission/generateRoutes',
-              roles);
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles);
+
           // dynamically add accessible routes
           router.addRoutes(accessRoutes);
+          // console.log(router.);
           // set the replace: true, so the navigation will not leave a history record
           next({...to, replace: true});
         } catch (error) {
@@ -124,10 +205,10 @@ router.beforeEach(async (to, from, next) => {
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
-      next()
+      next();
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
+      next(`/login?redirect=${to.path}`);
     }
   }
 });

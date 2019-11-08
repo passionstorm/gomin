@@ -10,7 +10,7 @@
 <script>
 export default {
   components: {
-    'Editor': () => import('../../components/widgets/Editor')
+    'Editor': () => import('../../widgets/Editor')
   },
   data() {
     return {

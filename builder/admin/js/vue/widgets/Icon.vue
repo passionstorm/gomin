@@ -4,6 +4,7 @@
 
 <script>
 export default {
+  name: 'icon',
   props: {
     name: {},
     size: {
@@ -20,7 +21,7 @@ export default {
   },
   computed: {
     loadIcon(){
-      return require(`../../assets/images/icons/${this.name}.svg`)
+      return require(`../assets/images/icons/${this.name}.svg`)
     }
   },
   created(){
@@ -32,18 +33,12 @@ export default {
 
 <style  scoped>
 .icon {
-    position: relative;
     display: inline-block;
-    vertical-align: middle;
-    width: 18px;
-    height: 18px;
-    margin: 0 .3rem;
+    font-size: 1.1rem;
     font-weight: bold;
     fill: currentColor;
 }
 .icon svg {
-    display: inline-block;
-    vertical-align: top;
     width: 100%;
     height: 100%;
 }

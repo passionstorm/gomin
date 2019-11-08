@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import icon from "./Svg";
+import Icon from "./Icon";
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default {
   components: {
-    icon,
+    Icon,
     ckeditor: CKEditor.component
   },
   computed: {
