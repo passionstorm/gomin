@@ -1,7 +1,7 @@
 <template>
     <aside class="sidenav"  @mouseover="mouseOver" :class="hover">
         <ul class="nav nav-pills nav-sidebar flex-column">
-            <slide-item  v-for="(item,index) in listSlides" :data="item"  :key="index" :items="item.children" />
+            <slide-item  v-for="(item,index) in listSlides" :data="item" :key="index" :items="item.children" :to="item.path" />
         </ul>
     </aside>
 </template>

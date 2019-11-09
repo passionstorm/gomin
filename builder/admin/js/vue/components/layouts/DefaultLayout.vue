@@ -7,12 +7,11 @@
             <component :is="slotHeader"></component>
         </app-header>
         <app-sidebar/>
-        <main>
-            <router-view
-                    @slot-footer="slot => slotFooter = slot"
-                    @slot-header="slot => slotHeader = slot"
-            />
-        </main>
+        <section class="content app_main">
+            <main class="container-fluid">
+                <router-view  />
+            </main>
+        </section>
         <app-footer>
             <component :is="slotFooter"></component>
         </app-footer>
@@ -28,7 +27,6 @@
   import AppHeader from '../AppHeader';
   import AppFooter from '../AppFooter';
   import AppMain from '../AppMain';
-
   export default {
     components: {
       AppSidebar,
@@ -58,6 +56,8 @@
     },
   };
 </script>
-<style>
-
+<style scoped>
+    .app_main{
+        overflow-y: auto;
+    }
 </style>

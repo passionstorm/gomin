@@ -1,7 +1,9 @@
 <template>
-  <main>
-    <router-view />
-  </main>
+  <section class="content">
+    <div class="container-fluid">
+      <router-view />
+    </div>
+  </section>
 </template>
 <script>
 export default {};
@@ -10,7 +12,6 @@ export default {};
 
 main {
   padding: 15px 0.5rem;
-  overflow: scroll;
 }
 
 </style>

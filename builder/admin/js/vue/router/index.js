@@ -26,7 +26,7 @@ export const constantRoutes = [
         meta: {
           title: 'Home', group: 'apps',
           roles: ['admin', 'editor'],
-          icon: '',
+          icon: 'dashboard',
         },
       },
     ],
@@ -65,9 +65,39 @@ export const asyncRoutes = [
           noCache: true,
           title: 'Bài viết', group: 'apps',
           roles: ['admin', 'editor'],
-          icon: '',
+          icon: 'edit',
         },
         component: () => import('../views/post/post'),
+      },
+    ],
+  },
+  {
+    path: '/user',
+    component: Layout,
+    type: 'bar',
+    meta: {title: "Thành viên", icon: 'users'},
+    children: [
+      {
+        path: 'index',
+        name: 'post',
+        meta: {
+          noCache: true,
+          title: 'Danh sách',
+          roles: ['admin', 'editor'],
+          icon: 'address_book',
+        },
+        component: () => import('../views/user'),
+      },
+      {
+        path: 'permission',
+        name: 'post',
+        meta: {
+          noCache: true,
+          title: 'Phân quyền',
+          roles: ['admin', 'editor'],
+          icon: 'user_role',
+        },
+        component: () => import('../views/permission'),
       },
     ],
   },
@@ -110,7 +140,7 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/menu',
+    path: '/menun',
     meta: {title: "menu"},
     component: Layout,
     type: 'bar',
@@ -150,7 +180,7 @@ export const asyncRoutes = [
 ];
 
 const createRouter = () => new Router({
-  mode: 'history', // require service support
+  // mode: 'history', // require service support
   scrollBehavior: () => ({y: 0}),
   routes: constantRoutes,
 });

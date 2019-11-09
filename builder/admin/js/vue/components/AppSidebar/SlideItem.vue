@@ -13,8 +13,8 @@
                 <icon :name="menuOpen ? 'arrow_down' : 'arrow_right'" class="right"/>
             </p>
         </a>
-        <ul class="nav nav-treeview" v-show="menuOpen">
-            <slide-item v-for="(item,index) in items" :data="item" :key="index" :to="item.router"/>
+        <ul class="nav nav-treeview" v-show="menuOpen" :class="it.path">
+            <slide-item v-for="(item,index) in items" :data="item" :key="index" :to="it.path"/>
         </ul>
     </li>
 </template>
@@ -50,16 +50,18 @@
           return [];
         },
       },
+      to: {
+        type: String,
+        default: '',
+      }
     },
     data() {
       return {
         hasChild: this.items.length > 0,
         it: this.data,
-        basePath: this.data.path,
-        menuOpen: false,
+        basePath: this.to,
+        menuOpen: this.data.path === this.$route.matched[0].path,
       };
-    },
-    created() {
     },
     methods: {
       toggleMenu() {
@@ -75,22 +77,19 @@
         return path.resolve(this.basePath, routePath);
       },
       isAlone() {
-        const childrens = this.items.filter(item => {
+        const children = this.items.filter(item => {
           return !item.hidden;
         });
-
         // When there is only one child router, the child router is displayed by default
-        if (childrens.length === 1) {
-          this.it = childrens[0];
+        if (children.length === 1) {
+          this.it = children[0];
           return true;
         }
-
         // Show parent if there are no child router to display
-        return childrens.length === 0;
+        return children.length === 0;
       },
     },
     created() {
-      // console.log(this.data);
     },
   };
 </script>
@@ -126,6 +125,7 @@
         width: 1.5rem;
         right: 1rem;
         top: .7rem;
+        transition: all 1s ease;
     }
 
     .nav-sidebar .nav-item > .nav-link {
