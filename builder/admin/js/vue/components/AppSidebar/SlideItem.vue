@@ -104,7 +104,7 @@
         font-size: 1.2rem;
         margin-right: .2rem;
         text-align: center;
-        width: 1.6rem;
+        width: 20px;
     }
 
     .nav-link {

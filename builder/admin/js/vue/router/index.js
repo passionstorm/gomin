@@ -102,8 +102,38 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/menu',
-    meta: {title: "menu"},
+    path: '/assets',
+    component: Layout,
+    type: 'bar',
+    meta: {title: "Phương tiện", icon: 'icon'},
+    children: [
+      {
+        path: 'icon',
+        name: 'icon',
+        meta: {
+          noCache: true,
+          title: 'Biểu tượng',
+          roles: ['admin', 'editor'],
+          icon: 'grin',
+        },
+        component: () => import('../views/asset'),
+      },
+      {
+        path: 'photo',
+        name: 'photo',
+        meta: {
+          noCache: true,
+          title: 'Ảnh',
+          roles: ['admin', 'editor'],
+          icon: 'images',
+        },
+        component: () => import('../views/asset/photo'),
+      },
+    ],
+  },
+  {
+    path: '/goods',
+    meta: {title: "Sản phẩm", icon: 'cart'},
     component: Layout,
     type: 'bar',
     children: [
@@ -194,6 +224,7 @@ export function resetRouter() {
 }
 
 const whiteList = ['/login', '/auth-redirect'];
+
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar

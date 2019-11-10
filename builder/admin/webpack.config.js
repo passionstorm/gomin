@@ -7,8 +7,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const resolve = dir => {
   return path.join(__dirname, dir);
 };
+const fs = require('fs');
+const iconFiles = fs.readdirSync(resolve('js/vue/assets/images/icons'))
+const icons = iconFiles.map(e => e.replace(/\.[^/.]+$/, ""))
+
 module.exports = {
   mode: 'development',
+  node: {
+    fs: 'empty',
+  },
   stats: {
     errors: true,
     // errorDetails: true,
@@ -33,6 +40,9 @@ module.exports = {
       'minify': true,
       // chunksSortMode: 'dependency'
     }),
+    new webpack.DefinePlugin({
+      "ICON_LIST": JSON.stringify(icons)
+    })
   ],
   devServer: {
     clientLogLevel: 'silent',
