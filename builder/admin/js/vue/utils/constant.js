@@ -19,6 +19,16 @@ export const CODE_MESSAGE = {
   504: '网关超时。',
 };
 
+export const HTTP_METHOD = {
+  GET: 'GET',
+  HEAD: 'HEAD',
+  POST: 'POST',
+  PUT: 'PUT',
+  PATH: 'PATCH', // RFC 5789
+  DELETE: 'DELETE',
+  OPTIONS: 'OPTIONS',
+};
+
 export const REQUEST_METHODS_TYPES = {
   mutation: ['post', 'delete', 'update'],
   query: ['get'],

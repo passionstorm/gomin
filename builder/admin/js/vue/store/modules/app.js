@@ -1,12 +1,12 @@
 const types = {
   TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR',
-}
+};
 
 const state = {
-  sidebarOpen: true
-}
+  sidebarOpen: true,
+};
 
-const loadState= () => {
+const loadState = () => {
   try {
     var serializedState = localStorage.getItem('app');
     if (serializedState === null || serializedState == '[]') {
@@ -16,7 +16,7 @@ const loadState= () => {
   } catch (err) {
     return undefined;
   }
-}
+};
 
 const saveState = (state) => {
   try {
@@ -25,23 +25,22 @@ const saveState = (state) => {
   } catch (err) {
     console.error(`Something went wrong: ${err}`);
   }
-}
+};
 
 const actions = {
-  toggleSidebar ({ commit, state }) {
-    commit(types.TOGGLE_SIDEBAR)
-
-  }
-}
+  toggleSidebar({commit, state}) {
+    commit(types.TOGGLE_SIDEBAR);
+  },
+};
 
 const mutations = {
-  [types.TOGGLE_SIDEBAR] (state) {
-    state.sidebarOpen = !state.sidebarOpen
-  }
-}
+  [types.TOGGLE_SIDEBAR](state) {
+    state.sidebarOpen = !state.sidebarOpen;
+  },
+};
 
 export default {
   state,
   actions,
-  mutations
-}
+  mutations,
+};

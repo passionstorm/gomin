@@ -1,13 +1,13 @@
 import Request from '../utils/request.vuex.orm';
 import {rules} from '../utils/validate';
 import {baseFilter} from '../utils';
-
+import {HTTP_METHOD} from '../utils/constant';
 const req = new Request();
 
 const t = {
   data() {
     return {
-      modelName: '',
+      entity: '',
       editedItem: {}, // currently item to be edited
       editedIndex: -1, // when -1, create, else update or delete
       model: null,
@@ -44,7 +44,7 @@ const t = {
   },
 
   watch: {
-    async modelName(val) {
+    async entity(val) {
       await this.fetch();
     },
     editedIndex(val) {
@@ -64,25 +64,39 @@ const t = {
 
   methods: {
     async fetch() {
-      const {
-        result: {fields},
-      } = await req.request(`get /${this.modelName}`);
+      const { result: {fields, model}, } = await req.request({
+        method: HTTP_METHOD.GET,
+        entity: this.entity,
+        params: {},
+      });
       this.fields = fields;
       this.model = model;
       this.setEditedItem(new this.model());
     },
     async deleteItem(data) {
-      await req.request(`delete /${this.modelName}`, data);
+      await req.request({
+        method: HTTP_METHOD.DELETE,
+        entity: this.entity,
+        data: data,
+      });
     },
-    async deleteAll(data) {
-      await req.request(`post /${this.modelName}/delete`, data);
-    },
+    // async deleteAll(data) {
+    //   await req.request(`post /${this.modelName}/delete`, data);
+    // },
     async updateItem(data) {
-      await req.request(`patch /${this.modelName}`, data);
+      await req.request({
+        method: HTTP_METHOD.PUT,
+        entity: this.entity,
+        data: data
+      })
     },
     async createItem(data) {
       console.log('Creating');
-      await req.request(`post /${this.modelName}`, data);
+      await req.request({
+        method: HTTP_METHOD.POST,
+        entity: this.entity,
+        data: data
+      })
     },
     async saveItem(data) {
       this.setEditedItem(data);

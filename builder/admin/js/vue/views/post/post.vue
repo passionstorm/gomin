@@ -46,7 +46,7 @@
   import Sticky from '../../widgets/Sticky';
   import Modal from '../../widgets/Modal';
   import VCheck from '../../widgets/VCheck';
-  import PostModel from '../../api/models/PostModel';
+  import PostModel from '../../store/models/PostModel';
 
   const defaultForm = {
     status: '1',

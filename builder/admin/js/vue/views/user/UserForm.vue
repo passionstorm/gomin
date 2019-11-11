@@ -31,7 +31,7 @@
     data() {
       return {
         form: Object.assign({}, this.data),
-        modelName: 'UserModel',
+        modelName: 'posts',
         valid: true
       };
     },
