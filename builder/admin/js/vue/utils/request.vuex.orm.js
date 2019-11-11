@@ -2,40 +2,40 @@ import {CODE_MESSAGE, REQUEST_METHODS_TYPES} from './constant';
 import models from '../api/models';
 
 const t = function() {
-  this.method = '';
-  this.namespace = '';
-  this.params = '';
-  this.model = null;
-  this.fields = '';
-  this.response = {};
+  t.method = '';
+  t.namespace = '';
+  t.params = '';
+  t.model = null;
+  t.fields = '';
+  t.response = {};
 };
 
-t.prototype.init = (url) => {
+t.init = (url) => {
   let [method = 'get', path] = url.split(' ');
-  this.method = method.toLowerCase();
-  this.namespace = path.replace('/', '');
-  this.params = path.split('/')[1];
-  this.model = models[this.namespace];
-  this.fields = this.model.fieldsKeys();
+  t.method = method.toLowerCase();
+  t.namespace = path.replace('/', '');
+  t.params = path.split('/')[1];
+  t.model = models[t.namespace];
+  t.fields = t.model.fieldsKeys();
 };
 
 t.prototype.request = async (url, data) => {
-  this.init(url);
+  t.init(url);
   let result = {
-    model: this.model,
-    fields: this.fields,
-    namespace: this.namespace,
-    reqParams: this.params,
-    reqMethod: this.method,
+    model: t.model,
+    fields: t.fields,
+    namespace: t.namespace,
+    reqParams: t.params,
+    reqMethod: t.method,
     reqData: data,
   };
 
-  if (REQUEST_METHODS_TYPES.mutation.includes(this.method)) {
+  if (REQUEST_METHODS_TYPES.mutation.includes(t.method)) {
     console.log('Mutating ...');
-    if (this.method === 'post') {
-      if (this.params === 'delete') {
+    if (t.method === 'post') {
+      if (t.params === 'delete') {
         data.map(async item => {
-          await this.model.$delete(item._id);
+          await t.model.$delete(item._id);
         });
         return {
           result: {
@@ -46,7 +46,7 @@ t.prototype.request = async (url, data) => {
           message: CODE_MESSAGE[200],
         };
       } else {
-        let createdItems = await this.model.$create({data});
+        let createdItems = await t.model.$create({data});
         if (!createdItems) {
           return {
             status: 404,
@@ -62,8 +62,8 @@ t.prototype.request = async (url, data) => {
           message: CODE_MESSAGE[200],
         };
       }
-    } else if (this.method === 'update') {
-      let updatedItems = await this.model.$update({data});
+    } else if (t.method === 'update') {
+      let updatedItems = await t.model.$update({data});
       if (!updatedItems) {
         return {
           status: 404,
@@ -78,8 +78,8 @@ t.prototype.request = async (url, data) => {
         status: 200,
         message: CODE_MESSAGE[200],
       };
-    } else if (this.method === 'delete') {
-      let deletedItems = await this.model.$delete(data._id);
+    } else if (t.method === 'delete') {
+      let deletedItems = await t.model.$delete(data._id);
       return {
         result: {
           ...result,
@@ -89,10 +89,10 @@ t.prototype.request = async (url, data) => {
       };
     }
   }
-  if (REQUEST_METHODS_TYPES.query.includes(this.method)) {
+  if (REQUEST_METHODS_TYPES.query.includes(t.method)) {
     console.log('Quering ...');
     if (data) {
-      let foundItems = await this.model.$get(data._id);
+      let foundItems = await t.model.$get(data._id);
       if (!foundItems) {
         return {
           status: 404,
@@ -109,7 +109,7 @@ t.prototype.request = async (url, data) => {
       };
     } else {
       // Sync localforage with vuex store
-      let allItems = await this.model.$fetch();
+      let allItems = await t.model.$fetch();
       if (!allItems) {
         return {
           status: 404,

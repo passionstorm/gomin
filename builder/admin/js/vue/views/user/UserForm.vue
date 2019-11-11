@@ -4,6 +4,8 @@
     <v-text title="Name" v-model="form.name"/>
     <v-text title="Email" v-model="form.email"/>
     <v-text title="Phone" v-model="form.phone"/>
+
+    <a @click="submit">Submit</a>
   </form>
 </template>
 
@@ -29,12 +31,19 @@
     data() {
       return {
         form: Object.assign({}, this.data),
+        modelName: 'UserModel',
+        valid: true
       };
     },
     watch: {
       data: function(newVal) { // watch it
         this.form = Object.assign({}, newVal);
       },
+    },
+    methods:{
+      submit(){
+        this.saveItem(this.editedItem)
+      }
     },
     computed: {},
   };
