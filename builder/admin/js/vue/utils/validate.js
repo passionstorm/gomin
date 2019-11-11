@@ -81,3 +81,17 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+
+export const rules = {
+  nameRules: [
+    (v) => !!v || 'This field is Required',
+    (v) => v.length <= 25 || 'Must be less than 25 characters'
+  ],
+  titleRules: [(v) => v.length <= 50 || 'Must be less than 50 characters'],
+  textRules: [(v) => v.length <= 500 || 'Must be less than 50 characters'],
+  emailRules: [
+    (v) => !!v || 'E-mail is required',
+    (v) => /.+@.+/.test(v) || 'E-mail must be valid'
+  ]
+}

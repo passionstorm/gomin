@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import getters from './getters';
-import OrmPlugin from './plugins/orm.plugin';
+import plugins from './plugins';
 
 Vue.use(Vuex);
 
@@ -17,7 +17,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const store = new Vuex.Store({
   modules,
   getters,
-  plugins: [OrmPlugin],
+  plugins,
 });
 
 export default store;

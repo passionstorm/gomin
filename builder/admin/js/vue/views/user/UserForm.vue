@@ -4,17 +4,18 @@
     <v-text title="Name" v-model="form.name"/>
     <v-text title="Email" v-model="form.email"/>
     <v-text title="Phone" v-model="form.phone"/>
-
   </form>
 </template>
 
 <script>
   import VText from '../../widgets/VText';
+  import CrudMixin from '../../minxins/crud_request.minxin'
   export default {
-    components:{
-      VText
+    mixins: [ CrudMixin ],
+    components: {
+      VText,
     },
-    props:{
+    props: {
       data: {
         type: Object,
         default: {
@@ -23,29 +24,19 @@
           phone: '',
           name: '',
         },
-      }
+      },
     },
-    data(){
-      return{
-        f: this.data
-      }
+    data() {
+      return {
+        form: Object.assign({}, this.data),
+      };
     },
     watch: {
-      data: function(newVal, old) { // watch it
-        console.log(newVal);
-        this.f = newVal
-      }
+      data: function(newVal) { // watch it
+        this.form = Object.assign({}, newVal);
+      },
     },
-    computed:{
-      form: {
-        get: function() {
-          return this.data
-        },
-        set: function(){
-
-        }
-      }
-    }
+    computed: {},
   };
 </script>
 

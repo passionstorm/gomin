@@ -1,52 +1,52 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-7">
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th v-for="header in headers" scope="col">{{header}}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="i in users">
-              <th scope="row">{{i.username}}</th>
-              <td>{{i.name}}</td>
-              <td>{{i.email}}</td>
-              <td>{{i.phone}}</td>
-              <td>
-                <div class="d-flex">
-                  <button type="button" class="btn" @click="edit(i)">
-                    <icon class="btn btn-icon" name="pen" color="red" ></icon>
-                  </button>
-
-                  <icon class="btn btn-icon" name="trash"></icon>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="col">
-        <user-form :data="selected"/>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th v-for="header in headers" scope="col">{{header}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="i in users">
+          <th scope="row">{{i.username}} </th>
+          <td>{{i.name}}</td>
+          <td>{{i.email}}</td>
+          <td>{{i.phone}}</td>
+          <td>
+            <div class="d-flex">
+              <button type="button" class="btn" @click="edit(i)">
+                <icon class="btn btn-icon" name="pen" color="red"></icon>
+              </button>
+              <icon class="btn btn-icon" name="trash"></icon>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-
+    <modal :is-icon-close="true" v-model="editModal">
+      <template slot="body">
+        <user-form  :data="itemSelected" @submit="editModal = false"/>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
   import Icon from '../../widgets/Icon';
   import json from './user.json';
-  import UserForm from './UserForm';
+  import Modal from '../../widgets/Modal';
+
   export default {
-    components: {Icon,UserForm},
+    components: {Modal, Icon,
+      UserForm: () => import('./UserForm')
+    },
     data() {
       return {
         users: json,
-        itemSelected: {}
+        itemSelected: {},
+        editModal: false,
       };
     },
     computed: {
@@ -56,24 +56,21 @@
           'username', 'name', 'email', 'phone', '',
         ];
       },
-      selected(){
-        return this.itemSelected
-      }
     },
-    methods:{
-      edit(item){
+    methods: {
+      edit(item) {
         this.itemSelected = item;
-      }
+        this.editModal = true;
+      },
     },
-    watch:{
-      itemSelected(val){
-        console.log(val);
-      }
-    }
+    watch: {
+      itemSelected(val) {
+      },
+    },
   };
 </script>
 <style scoped>
-  .btn-icon{
+  .btn-icon {
     display: block;
     width: 48px;
     cursor: pointer;

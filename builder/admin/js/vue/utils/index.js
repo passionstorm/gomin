@@ -3,8 +3,54 @@
 
 //   return capitalize(camel);
 // }
-import Vue from 'vue'
-export const bus = new Vue();
+
+export const lazySorter = (sortKey) => (order) => (data) => {
+  return data.slice().sort(compareObjectValues(sortKey)(order));
+};
+
+/**
+ * 比较对象中，每个键对应值的大小
+ * @param key 排序键
+ * @param order 排序方向
+ * @return 通用比较函数
+ */
+
+export const compareObjectValues = (key) => (order) => {
+  return (a, b) => comparePairs(a[key])(b[key])(order);
+};
+
+export const comparePairs = a => b => (order) => {
+  const notEqualCompare = a > b ? 1 : -1;
+  const equalCompare = a === b ? 0 : notEqualCompare;
+  return equalCompare * order;
+};
+
+export const lazyFilter = (filter) => (data) => {
+  return data.reduce((list, item) => {
+    Object.keys(item).some(key => {
+      if (checkStringMatch(item[key])(filter)) {
+        list.push(item);
+        return true;
+      }
+    });
+    return list;
+  }, []);
+};
+
+export const checkStringMatch = (test) => (filter) => {
+  return String(test).toLowerCase().indexOf(filter) > -1;
+};
+
+
+export const baseFilter = ({ sort, search }, items = []) => {
+  let filter = search && search.toLowerCase()
+  let order = 1
+  let data = items
+  data = lazyFilter(filter)(data)
+  data = lazySorter(sort)(order)(data)
+  return data
+}
+
 
 
 // export function camelActual (str) {
@@ -47,26 +93,26 @@ export const bus = new Vue();
 // }
 
 const randomElement = (arr = []) => {
-  return arr[Math.floor(Math.random() * arr.length)]
-}
+  return arr[Math.floor(Math.random() * arr.length)];
+};
 
 const kebab = str => {
-  return (str || "").replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()
-}
+  return (str || '').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+};
 
 const toggleFullScreen = () => {
   let doc = window.document;
   let docEl = doc.documentElement;
 
   let requestFullScreen =
-    docEl.requestFullscreen || docEl.mozRequestFullScreen ||
-    docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+      docEl.requestFullscreen || docEl.mozRequestFullScreen ||
+      docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
   let cancelFullScreen =
-    doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen ||
-    doc.msExitFullscreen;
+      doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen ||
+      doc.msExitFullscreen;
 
   if (!doc.fullscreenElement && !doc.mozFullScreenElement &&
-    !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+      !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
     requestFullScreen.call(docEl);
   } else {
     cancelFullScreen.call(doc);

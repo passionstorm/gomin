@@ -1,23 +1,24 @@
 <template>
-    <aside class="sidenav"  @mouseover="mouseOver" :class="hover">
-        <ul class="nav nav-pills nav-sidebar flex-column">
-            <slide-item  v-for="(item,index) in listSlides" :data="item" :key="index" :items="item.children" :to="item.path" />
-        </ul>
-    </aside>
+  <aside class="sidenav" @mouseover="mouseOver" :class="hover">
+    <ul class="nav nav-pills nav-sidebar flex-column">
+      <slide-item v-for="(item,index) in listSlides" :data="item" :key="index" :items="item.children" :to="item.path"/>
+    </ul>
+  </aside>
 </template>
 
 <script>
   import {mapGetters} from 'vuex';
   import SlideItem from './SlideItem';
+
   export default {
     components: {
-      SlideItem
+      SlideItem,
     },
     data() {
       return {
         basePath: this.$route.path,
         listSlides: [],
-        hover: ''
+        hover: '',
       };
     },
     computed: {
@@ -27,12 +28,12 @@
       ]),
     },
     methods: {
-      mouseOver(){
+      mouseOver() {
 
-      }
+      },
     },
     created() {
-      this.listSlides = this.permission_routes.filter(e => e.type === 'bar')
+      this.listSlides = this.permission_routes.filter(e => e.type === 'bar');
     },
   };
 </script>

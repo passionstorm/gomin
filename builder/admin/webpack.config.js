@@ -13,18 +13,18 @@ const icons = iconFiles.map(e => e.replace(/\.[^/.]+$/, ""))
 
 module.exports = {
   mode: 'development',
-  node: {
-    fs: 'empty',
-  },
   stats: {
     errors: true,
-    // errorDetails: true,
-    // hash: false,
+    errorDetails: true,
+    hash: false,
     version: false,
     builtAt: false,
     chunkModules: false,
-    // entrypoints: false,
+    children: false,
+    chunks: false,
+    entrypoints: false,
     modules: false,
+    assets: false,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

@@ -1,4 +1,5 @@
 import {Attr, Attribute, BelongsTo, Boolean, HasMany, HasOne, Increment, Model, MorphMany, MorphOne, MorphTo, Number} from '@vuex-orm/core';
+import {pullAll} from 'lodash-es';
 
 export class BaseModel extends Model {
   static primaryKey = '_id';
@@ -16,6 +17,32 @@ export class BaseModel extends Model {
       }
       return list;
     }, []);
+  }
+
+  static pagination(page, size) {
+    const total = this.query().count();
+    const pageNum = (page && parseInt(page)) || 1;
+    const pageSize = (size && parseInt(size)) || 10;
+    const totalPage = Math.ceil(total / pageSize) || 0;
+    const offset = (pageNum - 1) * pageSize || 0;
+    const next = (pageNum >= totalPage ? total % pageSize : pageSize) + 1;
+    return {
+      total,
+      pageNum,
+      pageSize,
+      totalPage,
+      offset,
+      next,
+    };
+  }
+
+  static pageQuery(pagination, query) {
+    if (!query) query = this.query();
+    return query.offset(pagination.offset).limit(pagination.pageSize);
+  }
+
+  static nonRelationFields() {
+    return pullAll(this.fieldsKeys(), this.relationFields());
   }
 
   static isFieldAttribute(field) {
@@ -78,11 +105,11 @@ export class BaseModel extends Model {
   }
 
   getRelations() {
-    return this.fields().reduce(function(relations, field, name,) {
-          if (!this.isFieldAttribute(field)) {
-            relations.set(name, field);
-          }
-          return relations;
-          }, []);
+    return this.fields().reduce(function(relations, field, name) {
+      if (!this.isFieldAttribute(field)) {
+        relations.set(name, field);
+      }
+      return relations;
+    }, []);
   }
 }
