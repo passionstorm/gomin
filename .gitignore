@@ -1,6 +1,0 @@
-/vendor/
-/Gopkg.lock
-/yarn.lock
-/node_modules/
-/app/tmp/
-/app/routes/
