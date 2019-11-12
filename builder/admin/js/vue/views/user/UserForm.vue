@@ -1,49 +1,39 @@
 <template>
   <form>
-    <v-text title="Username" v-model="form.username" disabled/>
-    <v-text title="Name" v-model="form.name"/>
-    <v-text title="Email" v-model="form.email"/>
-    <v-text title="Phone" v-model="form.phone"/>
+    <v-text title="Username" v-model="editedItem.username" disabled/>
+    <v-text title="Name" v-model="editedItem.name"/>
+    <v-text title="Email" v-model="editedItem.email"/>
+    <v-text title="Phone" v-model="editedItem.phone"/>
 
-    <a @click="submit">Submit</a>
+    <a @click="submit" class="btn btn-primary">Submit</a>
   </form>
 </template>
 
 <script>
   import VText from '../../widgets/VText';
-  import CrudMixin from '../../minxins/crud_request.minxin'
+  import CrudMixin from '../../minxins/form.minxin'
   export default {
     mixins: [ CrudMixin ],
     components: {
       VText,
     },
-    props: {
-      data: {
-        type: Object,
-        default: {
-          username: '',
-          email: '',
-          phone: '',
-          name: '',
-        },
-      },
-    },
+    props: {},
+
     data() {
       return {
-        form: Object.assign({}, this.data),
-        modelName: 'posts',
+        entity: 'users', //required
         valid: true
       };
     },
     watch: {
-      data: function(newVal) { // watch it
-        this.form = Object.assign({}, newVal);
-      },
     },
     methods:{
       submit(){
         this.saveItem(this.editedItem)
       }
+    },
+    created(){
+      window.UserForm = this
     },
     computed: {},
   };

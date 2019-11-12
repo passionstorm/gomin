@@ -1,11 +1,15 @@
 import {Attr, Attribute, BelongsTo, Boolean, HasMany, HasOne, Increment, Model, MorphMany, MorphOne, MorphTo, Number} from '@vuex-orm/core';
-import {pullAll} from 'lodash-es';
+import {omit, pullAll} from 'lodash-es';
 
 export class BaseModel extends Model {
   static primaryKey = '_id';
 
+  static state() {
+    return {};
+  }
+
   static fieldsKeys() {
-    return Object.keys(this.fields());
+    return Object.keys(omit(this.fields(), this.primaryKey));
   }
 
   static relationFields() {

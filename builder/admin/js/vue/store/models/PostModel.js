@@ -2,7 +2,7 @@ import {make} from 'vuex-pathify';
 import {BaseModel} from './BaseModel';
 import User from './UserModel';
 
-const ENTITY = 'posts';
+export const ENTITY = 'posts';
 
 const state = {
   name: ENTITY,
@@ -33,7 +33,12 @@ export default class PostModel extends BaseModel {
       body: this.string(''),
       status: this.number(0),
       author: this.belongsTo(User, 'user_id'),
+      tags: this.attr('dev'),
+      star: this.attr('10'),
+      like: this.attr('24'),
       published: this.attr(''),
+      updateAt: this.attr('2019-07-01'),
+      href: this.attr('http://localhost'),
     };
   }
 }

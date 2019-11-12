@@ -9,7 +9,7 @@
         </thead>
         <tbody>
         <tr v-for="i in users">
-          <th scope="row">{{i.username}} </th>
+          <th scope="row">{{i.username}}</th>
           <td>{{i.name}}</td>
           <td>{{i.email}}</td>
           <td>{{i.phone}}</td>
@@ -27,7 +27,7 @@
     </div>
     <modal :is-icon-close="true" v-model="editModal">
       <template slot="body">
-        <user-form  :data="itemSelected" @submit="editModal = false"/>
+        <user-form @submit="editModal = false"/>
       </template>
     </modal>
   </div>
@@ -37,15 +37,14 @@
   import Icon from '../../widgets/Icon';
   import json from './user.json';
   import Modal from '../../widgets/Modal';
-
+  import UserForm from './UserForm'
+  import {ENTITY, default as UserModel } from '../../store/models/UserModel';
   export default {
-    components: {Modal, Icon,
-      UserForm: () => import('./UserForm')
-    },
+    components: {Modal, Icon, UserForm},
     data() {
       return {
         users: json,
-        itemSelected: {},
+        entity: ENTITY,
         editModal: false,
       };
     },
@@ -53,19 +52,22 @@
       headers() {
         // return this.Model.nonRelationFields()
         return [
-          'username', 'name', 'email', 'phone', '',
+          '','username', 'name', 'email', 'phone', '',
         ];
       },
     },
+    created(){
+      console.log(UserModel.fieldsKeys());
+    },
     methods: {
       edit(item) {
-        this.itemSelected = item;
+        // this.setEditedItem(item)
+        window.UserForm.setEditedItem(item)
         this.editModal = true;
       },
     },
-    watch: {
-      itemSelected(val) {
-      },
+    async beforeMount(){
+      await UserModel.all()
     },
   };
 </script>
