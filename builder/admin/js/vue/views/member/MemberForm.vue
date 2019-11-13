@@ -1,33 +1,43 @@
 <template>
   <form>
     <v-text title="Username" v-model="editedItem.username" disabled/>
-    <v-text title="Name" v-model="editedItem.name"/>
+    <div class="form-group">
+      <label class="control-label">Role User</label>
+      <radio v-for="role in  roleSelect" title="role"/>
+    </div>
+    <v-text title="Mật khẩu" v-model="editedItem.password"/>
+    <v-text title="Xác nhận mật khẩu" v-model="editedItem.rePassword"/>
+    <v-text title="Tên" v-model="editedItem.name"/>
     <v-text title="Email" v-model="editedItem.email"/>
-    <v-text title="Phone" v-model="editedItem.phone"/>
+    <v-text title="Số điện thoại" v-model="editedItem.phone"/>
+    <v-text title="Dia chi"></v-text>
 
     <a @click="submit" class="btn btn-primary">Submit</a>
   </form>
 </template>
 
 <script>
-  import {Text} from '../../widgets';
+  import {ROLE_TYPES} from '../../utils/constant'
+  import {Text, Radio} from '../../widgets';
   import MemberModel from '../../store/models/MemberModel';
   export default {
-    // mixins: [CrudMixin],
     components: {
       VText: Text,
+      Radio
     },
     props: {},
 
     data() {
       return {
         editedItem: {},
+        roleSelect: Object.values(ROLE_TYPES),
       };
     },
     watch: {
-      '$route.params.id': function(val) {
-        this.$route.meta.title = val ? "Cập nhật thành viên" : "Thêm thành viên"
-      }
+
+    },
+    mounted(){
+      this.$route.meta.title = this.$route.params.id ? "Cập nhật thành viên" : "Thêm thành viên"
     },
     methods: {
       async submit() {
@@ -36,7 +46,6 @@
     },
     beforeCreate() {
       window.MemberForm = this
-
     },
     created(){
       // console.log(MemberModel.fields())

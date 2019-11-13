@@ -7,7 +7,6 @@
         <router-link to="edit" class="btn btn-d">Thêm thành viên</router-link>
       </div>
     </div>
-    <pre>{{selectedItems}}</pre>
     <div class="card">
       <div class="card-body">
         <div class="table-responsive">

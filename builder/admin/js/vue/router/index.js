@@ -81,68 +81,10 @@ let _asyncRoutes = [
     children: [
       {
         path: 'menu1',
-        name: 'edit',
+        name: 'goods_edit',
         meta: {
           noCache: true,
           title: 'menu1',
-          roles: ['admin', 'editor'],
-        },
-        component: () => import('../views/post/post'),
-      },
-      {
-        path: 'menu2',
-        name: 'menu2',
-        meta: {
-          noCache: true,
-          title: 'menu2',
-          roles: ['admin', 'editor'],
-        },
-        component: () => import('../views/post/post'),
-      },
-      {
-        path: 'menu3',
-        name: 'menu3',
-        meta: {
-          noCache: true,
-          title: 'menu3',
-          roles: ['admin', 'editor'],
-        },
-        component: () => import('../views/post/post'),
-      },
-    ],
-  },
-  {
-    path: '/menun',
-    meta: {title: 'menu'},
-    component: Layout,
-    type: 'bar',
-    children: [
-      {
-        path: 'menu1',
-        name: 'menu1',
-        meta: {
-          noCache: true,
-          title: 'menu1',
-          roles: ['admin', 'editor'],
-        },
-        component: () => import('../views/post/post'),
-      },
-      {
-        path: 'menu2',
-        name: 'menu2',
-        meta: {
-          noCache: true,
-          title: 'menu2',
-          roles: ['admin', 'editor'],
-        },
-        component: () => import('../views/post/post'),
-      },
-      {
-        path: 'menu3',
-        name: 'menu3',
-        meta: {
-          noCache: true,
-          title: 'menu3',
           roles: ['admin', 'editor'],
         },
         component: () => import('../views/post/post'),

@@ -24,10 +24,6 @@
         components: {
             Icon,
         },
-        model: {
-            prop: 'checked',
-            event: 'change'
-        },
         props: {
             title: {
                 type: String,

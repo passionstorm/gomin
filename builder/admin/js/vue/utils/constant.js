@@ -62,22 +62,23 @@ export function randomAvatar() {
   return avatarList[randomNumber(0, avatarList.length - 1)];
 }
 
-const EnumRoleType = {
+export const ROLE_TYPES = {
   ADMIN: 'admin',
   DEFAULT: 'guest',
   DEVELOPER: 'developer',
+  WRITER: 'writer',
 };
 
 const userPermission = {
   DEFAULT: {
     visit: ['1', '2', '21', '7', '5', '51', '52', '53'],
-    role: EnumRoleType.DEFAULT,
+    role: ROLE_TYPES.DEFAULT,
   },
   ADMIN: {
-    role: EnumRoleType.ADMIN,
+    role: ROLE_TYPES.ADMIN,
   },
   DEVELOPER: {
-    role: EnumRoleType.DEVELOPER,
+    role: ROLE_TYPES.DEVELOPER,
   },
 };
 

@@ -5,7 +5,7 @@ const t = {
   component: Layout,
   type: 'bar',
   index: 1,
-  meta: {title: 'Thành viên', icon: 'users'},
+  meta: {title: 'Nhân sự', icon: 'users'},
   children: [
     {
       path: 'index',
@@ -20,7 +20,7 @@ const t = {
     },
     {
       path: 'edit/:id?',
-      name: 'edit',
+      name: 'member_edit',
       hidden: true,
       meta: {
         noCache: true,
