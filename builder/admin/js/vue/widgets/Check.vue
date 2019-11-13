@@ -12,7 +12,7 @@
   <div v-else class="v_check">
     <label>
       <icon :name="mChecked ? 'square_check' : 'square'"/>
-      <input :name="name" :disabled="isDisabled" :checked="mChecked" :value="value"  @change="onChange($event.target.checked)" class="hide" type="checkbox"/>{{ title }}
+      <input style="display: block" v-model="selected" :value="val" class="" @change="onChange($event.target.checked)" type="checkbox"/>{{ title }}
     </label>
   </div>
 </template>
@@ -20,13 +20,9 @@
 <script>
   import Icon from './Icon';
   export default {
-    name: 'v-radio',
+    name: 'v-check',
     components: {
       Icon,
-    },
-    model: {
-      prop: 'checked',
-      event: 'change'
     },
     props: {
       title: {
@@ -44,11 +40,25 @@
         type: Boolean,
         default: false,
       },
-      'checked': Boolean,
-      'value': String,
+      value:{
+
+      },
+      checked: Boolean|Array,
+      val: Array|String,
       type: {
         type: String,
         default: 'checkbox',
+      }
+    },
+
+    computed:{
+      selected:{
+        get () {
+          return this.value
+        },
+        set (val) {
+          this.mVal = val
+        }
       }
     },
     data(){
@@ -59,16 +69,13 @@
     },
     methods:{
       onChange(checked){
-        console.log("changed");
-        this.mChecked = checked;
-        this.$emit('change', checked)
+        this.mChecked = checked
+        this.$emit('input', this.mVal)
       }
     },
-    watch:{
-      '$event.target': function(val) {
-        console.log(val)
-      }
-    }
+   created() {
+     console.log(this.value, this.val)
+   }
   };
 </script>
 <style scoped>

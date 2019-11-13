@@ -19,7 +19,7 @@
             </thead>
             <tbody>
             <tr v-for="i in items">
-              <td><check v-model="selectedItem" :val="i.username"/></td>
+              <td><check v-model="selectedItem" :val="i.username" checked/></td>
               <td><img :src="i.avatar"/></td>
               <td>{{i.username}}</td>
               <td>{{i.name}}</td>
@@ -57,7 +57,7 @@
         items: json,
         entity: ENTITY,
         editModal: false,
-        selectedItem: [],
+        selectedItem: ['Jakayla_Crooks86'],
       };
     },
     computed: {
