@@ -10,30 +10,36 @@
 </template>
 
 <script>
-  import VText from '../../widgets/VText';
-  import CrudMixin from '../../minxins/form.minxin'
+  import {Text} from '../../widgets';
+  import MemberModel from '../../store/models/MemberModel';
   export default {
-    mixins: [ CrudMixin ],
+    // mixins: [CrudMixin],
     components: {
-      VText,
+      VText: Text,
     },
     props: {},
 
     data() {
       return {
-        entity: 'users', //required
-        valid: true
+        editedItem: {},
       };
     },
     watch: {
-    },
-    methods:{
-      submit(){
-        this.saveItem(this.editedItem)
+      '$route.params.id': function(val) {
+        this.$route.meta.title = val ? "Cập nhật thành viên" : "Thêm thành viên"
       }
     },
+    methods: {
+      async submit() {
+        await MemberModel.$create({data :  this.editedItem})
+      }
+    },
+    beforeCreate() {
+      window.MemberForm = this
+
+    },
     created(){
-      window.UserForm = this
+      // console.log(MemberModel.fields())
     },
     computed: {},
   };

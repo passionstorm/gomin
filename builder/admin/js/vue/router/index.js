@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from '../components/layouts/DefaultLayout';
 import store from '../store';
+import {push} from '../utils';
 import {getToken} from '../utils/auth';
 
 Vue.use(Router);
@@ -52,7 +53,7 @@ export const constantRoutes = [
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
-export const asyncRoutes = [
+let _asyncRoutes = [
   {
     path: '/post',
     component: Layout,
@@ -71,75 +72,16 @@ export const asyncRoutes = [
       },
     ],
   },
-  {
-    path: '/user',
-    component: Layout,
-    type: 'bar',
-    meta: {title: "Thành viên", icon: 'users'},
-    children: [
-      {
-        path: 'index',
-        name: 'post',
-        meta: {
-          noCache: true,
-          title: 'Danh sách',
-          roles: ['admin', 'editor'],
-          icon: 'address_book',
-        },
-        component: () => import('../views/user'),
-      },
-      {
-        path: 'permission',
-        name: 'post',
-        meta: {
-          noCache: true,
-          title: 'Phân quyền',
-          roles: ['admin', 'editor'],
-          icon: 'user_role',
-        },
-        component: () => import('../views/permission'),
-      },
-    ],
-  },
-  {
-    path: '/assets',
-    component: Layout,
-    type: 'bar',
-    meta: {title: "Phương tiện", icon: 'icon'},
-    children: [
-      {
-        path: 'icon',
-        name: 'icon',
-        meta: {
-          noCache: true,
-          title: 'Biểu tượng',
-          roles: ['admin', 'editor'],
-          icon: 'grin',
-        },
-        component: () => import('../views/asset'),
-      },
-      {
-        path: 'photo',
-        name: 'photo',
-        meta: {
-          noCache: true,
-          title: 'Ảnh',
-          roles: ['admin', 'editor'],
-          icon: 'images',
-        },
-        component: () => import('../views/asset/photo'),
-      },
-    ],
-  },
+
   {
     path: '/goods',
-    meta: {title: "Sản phẩm", icon: 'cart'},
+    meta: {title: 'Sản phẩm', icon: 'cart'},
     component: Layout,
     type: 'bar',
     children: [
       {
         path: 'menu1',
-        name: 'menu1',
+        name: 'edit',
         meta: {
           noCache: true,
           title: 'menu1',
@@ -171,7 +113,7 @@ export const asyncRoutes = [
   },
   {
     path: '/menun',
-    meta: {title: "menu"},
+    meta: {title: 'menu'},
     component: Layout,
     type: 'bar',
     children: [
@@ -209,6 +151,20 @@ export const asyncRoutes = [
   },
 ];
 
+const collectRoute = require.context('../views', true, /index.route\.js$/);
+collectRoute.keys().forEach((r) => {
+  let route = collectRoute(r).default;
+  if (Array.isArray(route)) {
+    route.forEach(subRoute => {
+      _asyncRoutes = push(_asyncRoutes, subRoute, subRoute.index);
+    });
+  } else {
+    _asyncRoutes = push(_asyncRoutes, route, route.index);
+  }
+});
+
+export const asyncRoutes = _asyncRoutes;
+
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({y: 0}),
@@ -224,7 +180,6 @@ export function resetRouter() {
 }
 
 const whiteList = ['/login', '/auth-redirect'];
-
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar

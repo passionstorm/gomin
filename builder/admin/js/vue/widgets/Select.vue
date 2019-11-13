@@ -17,7 +17,6 @@
 </template>
 <script>
   export default {
-    name: 'v-select',
     props: {
       list: {
         type: Object,

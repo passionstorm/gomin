@@ -69,7 +69,7 @@ module.exports = {
       '_u': resolve('js/vue/utils'),
       '_v': resolve('js/vue/views'),
     },
-    extensions: ['.js', '.vue'],
+    extensions: ['*', '.js', '.vue',  '.json'],
   },
   watchOptions: {
     aggregateTimeout: 300,

@@ -46,7 +46,6 @@
 
 <script>
   export default {
-    name: 'v-text',
     props: {
       type: {
         type: String,

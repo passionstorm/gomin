@@ -14,7 +14,6 @@
 
 <script>
   export default {
-    name: 'v-tab',
     props: {
       tabsClass: {
         type: String,

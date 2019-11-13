@@ -36,13 +36,6 @@ const t = {
       if (search === '') return data;
       return baseFilter({sort, search}, data);
     },
-    headers() {
-      // if (this.fields) return genTableHeaders(this.fields)
-      return [];
-    },
-    count() {
-      return this.items ? this.items.length : 0;
-    },
   },
 
   watch: {

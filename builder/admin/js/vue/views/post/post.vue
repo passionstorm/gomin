@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sticky :stickyTop=0>
+    <pin :stickyTop=0>
       <div class="d-flex bd-highlight mb-2">
         <div class="mr-auto p-2 bd-highlight">
           <a href="javascript:;" class="btn btn-d">❮ Quay lai</a>
@@ -11,12 +11,12 @@
           <a href="javascript:;" @click="submit" class="btn btn-primary">Đăng</a>
         </div>
       </div>
-    </sticky>
+    </pin>
     <div class="row">
       <div class="col-12">
         <form action method="get">
-          <v-text v-model="form.title" type="'text'" title="Tiêu đề*" placeholder="Tiêu đề"/>
-          <v-text v-model="form.summary" type="textarea" title="Mô tả ngắn*"/>
+          <text v-model="form.title" type="'text'" title="Tiêu đề*" placeholder="Tiêu đề"/>
+          <text v-model="form.summary" type="textarea" title="Mô tả ngắn*"/>
           <div class="form-group">
             <label class="col-sm-3 control-label">Nội dung</label>
             <editor class="col-sm-10" ref="editor" v-model="form.body" :height="400"/>
@@ -41,11 +41,7 @@
 </template>
 
 <script>
-  import VText from '../../widgets/VText';
-  import VSelect from '../../widgets/VSelect';
-  import Sticky from '../../widgets/Sticky';
-  import Modal from '../../widgets/Modal';
-  import VCheck from '../../widgets/VCheck';
+  import {Text, Select, Modal, Check, Pin} from '../../widgets';
   import PostModel from '../../store/models/PostModel';
 
   const defaultForm = {
@@ -64,12 +60,8 @@
 
   export default {
     components: {
+      Pin, Text, Pin, Select, Modal, Check,
       editor: () => import('../../widgets/Editor'),
-      VText,
-      VSelect,
-      Sticky,
-      Modal,
-      VCheck,
     },
     data() {
       return {

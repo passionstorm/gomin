@@ -1,23 +1,24 @@
 <template>
-    <nav class="navbar_menu">
-        <div class="navbar_list">
-            <div class="navbar_item">
-                <div class="navbar_icon" @click="sidebarClick">
-                    <icon name="menu"/>
-                </div>
-            </div>
-            <div class="navbar_item">
-                <div class="navbar_link">{{title}}</div>
-            </div>
-            <div class="navbar_item">
-                <div class="navbar_link">Righ bar</div>
-            </div>
+  <nav class="navbar_menu">
+    <div class="navbar_list">
+      <div class="navbar_item">
+        <div class="navbar_icon" @click="sidebarClick">
+          <icon name="menu"/>
         </div>
-    </nav>
+      </div>
+      <div class="navbar_item">
+        <div class="navbar_link">{{title}}</div>
+      </div>
+      <div class="navbar_item">
+        <div class="navbar_link">Righ bar</div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
   import Icon from '../widgets/Icon';
+
   export default {
     components: {
       Icon
@@ -39,6 +40,9 @@
       '$route.path': function(newVal) {
         this.computeBreadcrumbs();
       },
+    },
+    created() {
+
     },
     methods: {
       sidebarClick() {
@@ -71,41 +75,41 @@
 </script>
 <style scoped>
 
-    .navbar_menu {
-        border-bottom: 1px solid #dee2e6;
-        background-color: #fff;
-        display: -ms-flexbox;
-        display: flex;
-        justify-content: center;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        padding-left: 0;
-        margin-bottom: 0;
-        list-style: none;
-    }
+  .navbar_menu {
+    border-bottom: 1px solid #dee2e6;
+    background-color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+  }
 
-    .navbar_list {
-        display: -ms-flexbox;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+  .navbar_list {
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .navbar_icon {
-        position: relative;
-        display: block;
-        padding: .5rem 1rem;
-        cursor: pointer;
-    }
+  .navbar_icon {
+    position: relative;
+    display: block;
+    padding: .5rem 1rem;
+    cursor: pointer;
+  }
 
-    .navbar_icon i {
-        width: 24px;
-        height: 24px;
-    }
+  .navbar_icon i {
+    width: 24px;
+    height: 24px;
+  }
 
-    .navbar_link {
-        padding: 0 1rem;
-        text-align: center;
-        cursor: pointer;
-    }
+  .navbar_link {
+    padding: 0 1rem;
+    text-align: center;
+    cursor: pointer;
+  }
 </style>

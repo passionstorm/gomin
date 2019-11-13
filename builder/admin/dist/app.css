@@ -7293,12 +7293,16 @@ template {
   z-index: 9; }
 
 .app_container {
-  display: grid;
-  grid-template-rows: 50px 1fr;
-  grid-template-areas: "sidenav header" "sidenav main";
+  display: flex;
   height: 100vh;
   background: #f4f6f9;
   transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out; }
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: auto; }
 
 .sidenav {
   height: 100vh;
@@ -7323,11 +7327,6 @@ template {
 .sidebar_close .sidebar_overlay {
   display: none; }
 
-.app_container.sidebar_close {
-  grid-template-columns: 1fr;
-  /* Side nav is hidden on mobile */
-  grid-template-areas: "header" "main"; }
-
 .app_header {
   grid-area: header; }
 
@@ -7347,12 +7346,10 @@ template {
 @media only screen and (min-width: 46.875em) {
   .app_container.sidebar_close {
     grid-template-columns: 60px 1fr;
-    grid-template-areas: "sidenav header" "sidenav main";
     transition: all 1s ease-in-out; }
   .app_container {
     grid-template-columns: 250px 1fr;
-    /* Show the side nav for non-mobile screens */
-    grid-template-areas: "sidenav header" "sidenav main"; }
+    /* Show the side nav for non-mobile screens */ }
   .sidebar_close .sidenav {
     display: block; }
   .sidebar_overlay {
@@ -7422,6 +7419,12 @@ template {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.3);
   cursor: pointer; }
+
+.sidebar_close .nav-treeview {
+  padding-left: 0; }
+
+.sidebar_close .nav-link {
+  text-align: center; }
 
 .nav-treeview {
   padding-left: 1rem;

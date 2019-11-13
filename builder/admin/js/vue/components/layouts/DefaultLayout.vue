@@ -3,18 +3,21 @@
         class="app_container"
         :class="{'sidebar_close': !sidebarOpen}"
     >
-        <app-header>
-            <component :is="slotHeader"></component>
-        </app-header>
         <app-sidebar/>
-        <section class="content app_main">
-            <main class="container-fluid">
-                <router-view  />
-            </main>
-        </section>
-        <app-footer>
-            <component :is="slotFooter"></component>
-        </app-footer>
+        <div class="main-container">
+            <app-header>
+                <component :is="slotHeader"></component>
+            </app-header>
+
+            <section class="content app_main">
+                <main class="container-fluid">
+                    <router-view  />
+                </main>
+            </section>
+            <app-footer>
+                <component :is="slotFooter"></component>
+            </app-footer>
+        </div>
         <div
                 class="sidebar_overlay"
                 @click="sidebarOverlayClick"
@@ -57,7 +60,4 @@
   };
 </script>
 <style scoped>
-    .app_main{
-        overflow-y: auto;
-    }
 </style>

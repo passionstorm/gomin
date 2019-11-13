@@ -25,6 +25,16 @@ export const comparePairs = a => b => (order) => {
   return equalCompare * order;
 };
 
+export const push = (arr, newItem, index = -1) => {
+  if (index !== -1) return [
+    ...arr.slice(0, index),
+    newItem,
+    ...arr.slice(index),
+  ];
+
+  return [...arr, newItem];
+};
+
 export const lazyFilter = (filter) => (data) => {
   return data.reduce((list, item) => {
     Object.keys(item).some(key => {
@@ -41,17 +51,14 @@ export const checkStringMatch = (test) => (filter) => {
   return String(test).toLowerCase().indexOf(filter) > -1;
 };
 
-
-export const baseFilter = ({ sort, search }, items = []) => {
-  let filter = search && search.toLowerCase()
-  let order = 1
-  let data = items
-  data = lazyFilter(filter)(data)
-  data = lazySorter(sort)(order)(data)
-  return data
-}
-
-
+export const baseFilter = ({sort, search}, items = []) => {
+  let filter = search && search.toLowerCase();
+  let order = 1;
+  let data = items;
+  data = lazyFilter(filter)(data);
+  data = lazySorter(sort)(order)(data);
+  return data;
+};
 
 // export function camelActual (str) {
 //   return (str || '').replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
@@ -92,7 +99,7 @@ export const baseFilter = ({ sort, search }, items = []) => {
 //   return text;
 // }
 
-const randomElement = (arr = []) => {
+const randomElement = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 

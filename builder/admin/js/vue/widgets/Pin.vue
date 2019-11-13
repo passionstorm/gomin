@@ -1,7 +1,7 @@
 <template>
   <div :style="{height:height+'px',zIndex:zIndex}">
-    <div
-        :class="className"
+    <div   :class="className"
+
         :style="{top:(isSticky ? stickyTop +'px' : ''),zIndex:zIndex,position:position,width:width,height:height+'px'}"
     >
       <slot>
@@ -13,7 +13,6 @@
 
 <script>
   export default {
-    name: 'sticky',
     props: {
       stickyTop: {
         type: Number,
