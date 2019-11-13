@@ -4,7 +4,7 @@
       <div class="v_check">
         <label>
           <icon :name="mChecked ? 'square_check' : 'square'"/>
-          <input :name="name"  :disabled="isDisabled" :checked="mChecked" :value="value" @change="onChange($event.target.checked)" class="hide" type="checkbox"/>{{ title }}
+          <input :name="name" :disabled="isDisabled" :checked="mChecked" :value="value" @change="onChange($event.target.checked)" class="hide" type="checkbox"/>{{ title }}
         </label>
       </div>
     </div>
@@ -12,13 +12,14 @@
   <div v-else class="v_check">
     <label>
       <icon :name="mChecked ? 'square_check' : 'square'"/>
-      <input style="display: block" v-model="selected" :value="val" class="" @change="onChange($event.target.checked)" type="checkbox"/>{{ title }}
+      <input ref="check" v-model="selected" :value="val" @change="onChange($event.target.checked)" type="checkbox"/>{{ title }}
     </label>
   </div>
 </template>
 
 <script>
   import Icon from './Icon';
+
   export default {
     name: 'v-check',
     components: {
@@ -40,42 +41,40 @@
         type: Boolean,
         default: false,
       },
-      value:{
-
-      },
-      checked: Boolean|Array,
-      val: Array|String,
+      value: {},
+      checked: Boolean | Array,
+      val: Array | String,
       type: {
         type: String,
         default: 'checkbox',
-      }
+      },
     },
 
-    computed:{
-      selected:{
-        get () {
-          return this.value
+    computed: {
+      selected: {
+        get() {
+          return this.value;
         },
-        set (val) {
-          this.mVal = val
-        }
-      }
+        set(val) {
+          this.mVal = val;
+        },
+      },
     },
-    data(){
+    data() {
       return {
         mChecked: this.checked,
-        mVal: this.value,
-      }
+        mVal: null,
+      };
     },
-    methods:{
-      onChange(checked){
-        this.mChecked = checked
-        this.$emit('input', this.mVal)
-      }
+    methods: {
+      onChange(checked) {
+        this.mChecked = checked;
+        this.$emit('input', this.mVal);
+      },
     },
-   created() {
-     console.log(this.value, this.val)
-   }
+    mounted() {
+      this.mChecked = this.$refs.check.checked || false;
+    },
   };
 </script>
 <style scoped>
@@ -83,11 +82,13 @@
     width: 24px;
     height: 24px;
   }
-  .v_check label{
+
+  .v_check label {
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
   }
+
   .v_check input {
     display: none;
   }

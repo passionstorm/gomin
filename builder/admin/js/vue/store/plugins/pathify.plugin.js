@@ -1,4 +1,3 @@
-
 import pathify from 'vuex-pathify';
 
 pathify.options.mapping = 'simple';

@@ -3,11 +3,11 @@
     <div class="d-flex mb-2">
       <div class="mr-auto"></div>
       <div>
-        <a class="btn btn-danger" href="javascript:;">Xoá</a>
+        <a v-show="selectedItems.length > 0" class="btn btn-danger" href="javascript:;">Xoá</a>
         <router-link to="edit" class="btn btn-d">Thêm thành viên</router-link>
       </div>
     </div>
-    <pre>{{selectedItem}}</pre>
+    <pre>{{selectedItems}}</pre>
     <div class="card">
       <div class="card-body">
         <div class="table-responsive">
@@ -19,7 +19,7 @@
             </thead>
             <tbody>
             <tr v-for="i in items">
-              <td><check v-model="selectedItem" :val="i.username" checked/></td>
+              <td><check v-model="selectedItems" :val="i.username" checked/></td>
               <td><img :src="i.avatar"/></td>
               <td>{{i.username}}</td>
               <td>{{i.name}}</td>
@@ -57,7 +57,7 @@
         items: json,
         entity: ENTITY,
         editModal: false,
-        selectedItem: ['Jakayla_Crooks86'],
+        selectedItems: ['Jakayla_Crooks86'],
       };
     },
     computed: {
