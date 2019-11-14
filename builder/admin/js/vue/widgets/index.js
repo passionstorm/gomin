@@ -8,7 +8,8 @@ import Tab from './Tab';
 import Text from './Text';
 import Card from './Card';
 import Editor from './Editor';
-
+import Field from  './field/Field'
+import VInput from  './Input'
 export {
   Pin,
   Check,
@@ -20,4 +21,6 @@ export {
   Text,
   Card,
   Editor,
+  Field,
+  VInput,
 };
