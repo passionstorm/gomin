@@ -30,9 +30,9 @@
       <slot/>
     </v-field-body>
     <template v-else>
-      <validation-provider :name="label" :rules="rules"  v-slot="{ errors }">
+      <validation-provider mode="lazy" :name="label" :rules="rules" :vid="vid"  v-slot="{ errors }">
         <slot/>
-        <span class="help is-danger">{{ errors[0] }}</span>
+        <span class="help is-danger">{{ errors }}</span>
       </validation-provider>
     </template>
     <p
@@ -66,6 +66,7 @@
       expanded: Boolean,
       horizontal: Boolean,
       rules: Array|String,
+      vid: String,
       addons: {
         type: Boolean,
         default: true
