@@ -47,7 +47,7 @@ export function randomAvatar() {
     'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?h=350&auto=compress&cs=tinysrgb',
     'https://d3iw72m71ie81c.cloudfront.net/female-17.jpg',
     'https://randomuser.me/api/portraits/men/35.jpg',
-    'https://pbs.twimg.com/profile_images/835224725815246848/jdMBCxHS.jpg',
+    'https://pbs.twimg.com/profile_images/835224725815246848/jdMBCyxHS.jpg',
     'https://pbs.twimg.com/profile_images/584098247641300992/N25WgvW_.png',
     'https://d3iw72m71ie81c.cloudfront.net/male-5.jpg',
     'https://images.pexels.com/photos/413723/pexels-photo-413723.jpeg?h=350&auto=compress&cs=tinysrgb',

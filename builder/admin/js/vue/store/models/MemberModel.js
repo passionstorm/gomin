@@ -19,7 +19,7 @@ export default class MemberModel extends BaseModel {
       status: this.number('active'),
       hash: this.string(''),
       token: this.string('qqyzkzldrx'),
-      role: this.attr(null),
+      role: this.attr('guest'),
       avatarUrl: this.string('/avatar/man_1.jpg'),
       permissions: this.attr([]),
     };

@@ -2,9 +2,12 @@
   <form>
     <v-text title="Username" v-model="editedItem.username" disabled/>
     <div class="form-group">
-      <label class="control-label">Role User</label>
-      <radio v-for="role in  roleSelect" title="role"/>
+      <label class="col-sm-6">Chức vụ</label>
+      <div class="block col-sm-10">
+        <radio color="is-success" v-for="role in roleSelect" v-model="editedItem.role" name="name" :val="role"> {{role}}</radio>
+      </div>
     </div>
+
     <v-text title="Mật khẩu" v-model="editedItem.password"/>
     <v-text title="Xác nhận mật khẩu" v-model="editedItem.rePassword"/>
     <v-text title="Tên" v-model="editedItem.name"/>
@@ -20,6 +23,7 @@
   import {ROLE_TYPES} from '../../utils/constant'
   import {Text, Radio} from '../../widgets';
   import MemberModel from '../../store/models/MemberModel';
+
   export default {
     components: {
       VText: Text,
@@ -29,25 +33,30 @@
 
     data() {
       return {
-        editedItem: {},
+        editedItem: {
+          role: 'admin'
+        },
         roleSelect: Object.values(ROLE_TYPES),
       };
     },
-    watch: {
-
-    },
-    mounted(){
+    watch: {},
+    mounted() {
       this.$route.meta.title = this.$route.params.id ? "Cập nhật thành viên" : "Thêm thành viên"
     },
     methods: {
       async submit() {
-        await MemberModel.$create({data :  this.editedItem})
+        this.$app.notification.open({
+          message: 'Something happened correctly!',
+          type: 'is-success'
+        });
+        // .open('Something happened')
+        // await MemberModel.$create({data: this.editedItem})
       }
     },
     beforeCreate() {
       window.MemberForm = this
     },
-    created(){
+    created() {
       // console.log(MemberModel.fields())
     },
     computed: {},

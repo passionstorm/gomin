@@ -1,95 +1,43 @@
 <template>
-  <div v-if="title" class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="v_check">
-        <label>
-          <icon :name="mChecked ? 'square_check' : 'square'"/>
-          <input :name="name" :disabled="isDisabled" :checked="mChecked" :value="value" @change="onChange($event.target.checked)" class="hide" type="checkbox"/>{{ title }}
-        </label>
-      </div>
-    </div>
-  </div>
-  <div v-else class="v_check">
-    <label>
-      <icon :name="mChecked ? 'square_check' : 'square'"/>
-      <input ref="check" v-model="selected" :value="val" @change="onChange($event.target.checked)" type="checkbox"/>{{ title }}
-    </label>
-  </div>
+  <label
+      class="b-checkbox checkbox"
+      :class="[size, { 'is-disabled': disabled }]"
+      ref="label"
+      :disabled="disabled"
+      @click="focus"
+      @keydown.prevent.enter="$refs.label.click()">
+    <input
+        v-model="computedValue"
+        :indeterminate.prop="indeterminate"
+        type="checkbox"
+        ref="input"
+        @click.stop
+        :disabled="disabled"
+        :required="required"
+        :name="name"
+        :value="val"
+        :true-value="trueValue"
+        :false-value="falseValue">
+    <span class="check" :class="color"></span>
+    <span class="control-label"><slot/></span>
+  </label>
 </template>
 
 <script>
-  import Icon from './Icon';
-
+  import CheckRadioMixin from './mixins/checkradio.mixin'
   export default {
-    name: 'v-check',
-    components: {
-      Icon,
-    },
+    name: 'VCheck',
+    mixins: [CheckRadioMixin],
     props: {
-      title: {
-        type: String,
-        default: '',
+      indeterminate: Boolean,
+      trueValue: {
+        type: [String, Number, Boolean, Function, Object, Array],
+        default: true
       },
-      name: {
-        type: String,
-        default: '',
-      },
-      label: {
-        type: String,
-      },
-      isDisabled: {
-        type: Boolean,
-        default: false,
-      },
-      value: {},
-      checked: Boolean | Array,
-      val: Array | String,
-      type: {
-        type: String,
-        default: 'checkbox',
-      },
-    },
-
-    computed: {
-      selected: {
-        get() {
-          return this.value;
-        },
-        set(val) {
-          this.mVal = val;
-        },
-      },
-    },
-    data() {
-      return {
-        mChecked: this.checked,
-        mVal: null,
-      };
-    },
-    methods: {
-      onChange(checked) {
-        this.mChecked = checked;
-        this.$emit('input', this.mVal);
-      },
-    },
-    mounted() {
-      this.mChecked = this.$refs.check.checked || false;
-    },
-  };
+      falseValue: {
+        type: [String, Number, Boolean, Function, Object, Array],
+        default: false
+      }
+    }
+  }
 </script>
-<style scoped>
-  .v_check i {
-    width: 24px;
-    height: 24px;
-  }
-
-  .v_check label {
-    cursor: pointer;
-    user-select: none;
-    white-space: nowrap;
-  }
-
-  .v_check input {
-    display: none;
-  }
-</style>

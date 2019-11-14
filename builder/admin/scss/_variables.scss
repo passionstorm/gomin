@@ -13,7 +13,7 @@ $purple: #605ca8 !default;
 $maroon: #d81b60 !default;
 $black: #111 !default;
 $gray-x-light: #d2d6de !default;
-
+$grey: #111;
 $colors: map-merge((
         'navy': $navy,
         'olive': $olive,
@@ -233,3 +233,8 @@ $ribbon-xl-top: 47px !default;
 $ribbon-xl-right: 4px !default;
 
 $paragraph-margin-bottom: 0;
+
+
+//RADIO
+$radio-checked-color: $olive;
+$checkbox-checked-color: $olive;

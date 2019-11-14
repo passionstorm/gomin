@@ -3,11 +3,17 @@
 @import "reboot";
 @import "main_sidebar";
 @import "button";
-//@import "card";
+@import "checkbox";
+@import "radio";
+@import "notices";
+@import "notification";
 //@import "form";
+@import "function";
+
+
+
 main {
   padding: 15px 0.5rem;
-  overflow: scroll;
 }
 
 .hide{

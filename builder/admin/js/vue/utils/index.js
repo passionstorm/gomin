@@ -8,12 +8,106 @@ export const lazySorter = (sortKey) => (order) => (data) => {
   return data.slice().sort(compareObjectValues(sortKey)(order));
 };
 
+export function removeElement(el) {
+  if (typeof el.remove !== 'undefined') {
+    el.remove()
+  } else if (typeof el.parentNode !== 'undefined') {
+    el.parentNode.removeChild(el)
+  }
+}
+
+export const isMobile = {
+  Android: function () {
+    return (
+        typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/Android/i)
+    )
+  },
+  BlackBerry: function () {
+    return (
+        typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/BlackBerry/i)
+    )
+  },
+  iOS: function () {
+    return (
+        typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
+    )
+  },
+  Opera: function () {
+    return (
+        typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/Opera Mini/i)
+    )
+  },
+  Windows: function () {
+    return (
+        typeof window !== 'undefined' &&
+        window.navigator.userAgent.match(/IEMobile/i)
+    )
+  },
+  any: function () {
+    return (
+        isMobile.Android() ||
+        isMobile.BlackBerry() ||
+        isMobile.iOS() ||
+        isMobile.Opera() ||
+        isMobile.Windows()
+    )
+  }
+}
+
+const mergeFn = (target, source, deep = false) => {
+  if (deep || !Object.assign) {
+    const isDeep = (prop) =>
+        isObject(source[prop]) && target.hasOwnProperty(prop) && isObject(target[prop])
+    const replaced = Object.getOwnPropertyNames(source)
+    .map((prop) =>
+        ({ [prop]: isDeep(prop) ? mergeFn(target[prop], source[prop]) : source[prop] }))
+    .reduce((a, b) => ({ ...a, ...b }), {})
+
+    return {
+      ...target,
+      ...replaced
+    }
+  } else {
+    return Object.assign(target, source)
+  }
+}
+export const merge = mergeFn
+
+export function escapeRegExpChars(value) {
+  if (!value) return value
+
+  // eslint-disable-next-line
+  return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
+}
+
+
+export function getValueByPath(obj, path) {
+  const value = path.split('.').reduce((o, i) => o ? o[i] : null, obj)
+  return value
+}
+
 /**
- * 比较对象中，每个键对应值的大小
- * @param key 排序键
- * @param order 排序方向
- * @return 通用比较函数
+ * Extension of indexOf method by equality function if specified
  */
+export function indexOf(array, obj, fn) {
+  if (!array) return -1
+
+  if (!fn || typeof fn !== 'function') return array.indexOf(obj)
+
+  for (let i = 0; i < array.length; i++) {
+    if (fn(array[i], obj)) {
+      return i
+    }
+  }
+
+  return -1
+}
+
+const isObject = (item) => typeof item === 'object' && !Array.isArray(item)
 
 export const compareObjectValues = (key) => (order) => {
   return (a, b) => comparePairs(a[key])(b[key])(order);
