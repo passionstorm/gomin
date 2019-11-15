@@ -1,7 +1,7 @@
 <template>
   <ValidationObserver ref="form" tag="form" @submit.prevent="onSubmit">
-    <field label="Username" rules="required|min:3|max:30" class="col-sm-10" >
-      <v-input name="ysj" v-model="editedItem.username" maxlength="30"/>
+    <field label="Username"  class="col-sm-10" >
+      <v-input name="username" rules="required|min:3|max:30" v-model="editedItem.username" maxlength="30"/>
     </field>
     <field label="Chức vụ" class="col-sm-10">
       <div class="block col-sm-10">
@@ -10,20 +10,20 @@
         </radio>
       </div>
     </field>
-    <field label="Mật khẩu" class="col-sm-10" rules="required|min:6|max:20" vid="password">
-      <v-input type="password" v-model="editedItem.password"/>
+    <field label="Mật khẩu" class="col-sm-10" >
+      <v-input type="password" name="Mật khẩu" v-model="editedItem.password" rules="required|min:6|max:20" vid="password"/>
     </field>
-    <field label="Xác nhận mật khẩu" class="col-sm-10" rules="required|confirmed:password">
-      <v-input type="password" v-model="editedItem.rePassword"/>
+    <field label="Xác nhận mật khẩu" class="col-sm-10" >
+      <v-input name="Xác nhận mật khẩu" type="password" v-model="editedItem.rePassword" rules="required|confirmed:password"/>
     </field>
     <field label="Tên" class="col-sm-10">
       <v-input title="Tên" v-model="editedItem.name"/>
     </field>
-    <field label="Email" class="col-sm-10" rules="required|email">
-      <v-input v-model="editedItem.email"/>
+    <field label="Email" class="col-sm-10" >
+      <v-input name="Email" v-model="editedItem.email" rules="required|email"/>
     </field>
-    <field label="Số điện thoại" class="col-sm-10">
-      <v-input v-model="editedItem.phone"/>
+    <field  label="Số điện thoại" class="col-sm-10">
+      <v-input rules="phone" v-model="editedItem.phone"/>
     </field>
     <button type="submit" class="btn btn-primary">Submit</button>
   </ValidationObserver>
@@ -31,13 +31,12 @@
 
 <script>
   import {ROLE_TYPES} from '../../utils/constant';
-  import {Field, Radio, Text, VInput} from '../../widgets';
+  import {Field, Radio, VInput} from '../../widgets';
   import {ValidationObserver} from 'vee-validate';
 
   export default {
     components: {
       VInput,
-      VText: Text,
       Field,
       ValidationObserver,
       Radio,

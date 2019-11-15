@@ -41,6 +41,8 @@
     text-align: center;
     width: 110px;
     margin: 15px 8px;
+    display: flex;
+    flex-direction: column;
   }
 
   .icon_item i {

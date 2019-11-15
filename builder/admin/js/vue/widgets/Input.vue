@@ -1,67 +1,71 @@
 <template>
-  <div class="control" :class="rootClasses">
-    <input
-        v-if="type !== 'textarea'"
-        ref="input"
-        class="form-control"
-        :class="[inputClasses, customClass]"
-        :type="newType"
-        :autocomplete="newAutocomplete"
-        :maxlength="maxlength"
-        :value="computedValue"
-        v-bind="$attrs"
-        @input="onInput"
-        @blur="onBlur"
-        @focus="onFocus">
+  <ValidationProvider :rules="rules" v-slot="{ errors, valid }" :name="name" :vid="vid">
+    <div class="control" :class="rootClasses">
+      <input
+          v-if="type !== 'textarea'"
+          ref="input"
+          class="form-control input"
+          :class="[inputClasses, customClass, {'is-danger': errors.length > 0}, {'is-success': valid}]"
+          :type="newType"
+          :autocomplete="newAutocomplete"
+          :maxlength="maxlength"
+          :value="computedValue"
+          v-bind="$attrs"
+          @input="onInput"
+          @blur="onBlur"
+          @focus="onFocus">
+      <textarea
+          v-else
+          ref="textarea"
+          class="textarea"
+          :class="[inputClasses, customClass]"
+          :maxlength="maxlength"
+          :value="computedValue"
+          v-bind="$attrs"
+          @input="onInput"
+          @blur="onBlur"
+          @focus="onFocus"/>
 
-    <textarea
-        v-else
-        ref="textarea"
-        class="textarea"
-        :class="[inputClasses, customClass]"
-        :maxlength="maxlength"
-        :value="computedValue"
-        v-bind="$attrs"
-        @input="onInput"
-        @blur="onBlur"
-        @focus="onFocus"/>
+      <!--      <icon class="is-left" v-if="icon" :name="icon"/>-->
 
-<!--    <b-icon-->
-<!--        v-if="icon"-->
-<!--        class="is-left"-->
-<!--        :icon="icon"-->
-<!--        :pack="iconPack"-->
-<!--        :size="iconSize"/>-->
+      <icon size="sm" v-if="isCheckValid(valid, errors)" name="check" class="is-right icon-checker" color="green"></icon>
+      <!--    <b-icon-->
+      <!--        v-if="icon"-->
+      <!--        class="is-left"-->
+      <!--        :icon="icon"-->
+      <!--        :pack="iconPack"-->
+      <!--        :size="iconSize"/>-->
 
-<!--    <b-icon-->
-<!--        v-if="!loading && (passwordReveal || statusTypeIcon)"-->
-<!--        class="is-right"-->
-<!--        :class="{ 'is-clickable': passwordReveal }"-->
-<!--        :icon="passwordReveal ? passwordVisibleIcon : statusTypeIcon"-->
-<!--        :pack="iconPack"-->
-<!--        :size="iconSize"-->
-<!--        :type="!passwordReveal ? statusType : 'is-primary'"-->
-<!--        both-->
-<!--        @click.native="togglePasswordVisibility"/>-->
-
-    <small
-        v-if="maxlength && hasCounter && type !== 'number'"
-        class="help counter"
-        :class="{ 'is-invisible': !isFocused }">
-      {{ valueLength }} / {{ maxlength }}
-    </small>
-  </div>
+      <!--    <b-icon-->
+      <!--        v-if="!loading && (passwordReveal || statusTypeIcon)"-->
+      <!--        class="is-right"-->
+      <!--        :class="{ 'is-clickable': passwordReveal }"-->
+      <!--        :icon="passwordReveal ? passwordVisibleIcon : statusTypeIcon"-->
+      <!--        :pack="iconPack"-->
+      <!--        :size="iconSize"-->
+      <!--        :type="!passwordReveal ? statusType : 'is-primary'"-->
+      <!--        both-->
+      <!--        @click.native="togglePasswordVisibility"/>-->
+      <span class="help is-danger" style="display: inline-flex">{{ errors[0] }}</span>
+      <small
+          v-if="maxlength && hasCounter && type !== 'number'"
+          class="help counter"
+          :class="{ 'is-invisible': !isFocused }">
+        {{ valueLength }} / {{ maxlength }}
+      </small>
+    </div>
+  </ValidationProvider>
 </template>
 
 <script>
-  // import Icon from '../icon/Icon'
+  import Icon from './Icon'
   import config from '../utils/config_element'
   import FormElementMixin from './mixins/form.mixin'
+  import {ValidationProvider} from 'vee-validate';
+
   export default {
     name: 'VInput',
-    components: {
-      // [Icon.name]: Icon
-    },
+    components: {Icon, ValidationProvider,},
     mixins: [FormElementMixin],
     inheritAttrs: false,
     props: {
@@ -70,6 +74,10 @@
         type: String,
         default: 'text'
       },
+      vid: String,
+      name: String,
+      rules: String,
+      icon: String,
       passwordReveal: Boolean,
       hasCounter: {
         type: Boolean,
@@ -90,6 +98,9 @@
             ? 'textarea'
             : 'input'
       }
+    },
+    created(){
+      this.$emit('required', true);
     },
     computed: {
       computedValue: {
@@ -117,7 +128,7 @@
         return [
           this.statusType,
           this.size,
-          { 'is-rounded': this.rounded }
+          {'is-rounded': this.rounded}
         ]
       },
       hasIconRight() {
@@ -127,23 +138,29 @@
        * Position of the icon or if it's both sides.
        */
       iconPosition() {
-        if (this.icon && this.hasIconRight) {
-          return 'has-icons-left has-icons-right'
-        } else if (!this.icon && this.hasIconRight) {
-          return 'has-icons-right'
-        } else if (this.icon) {
+        if (this.icon) {
+          if (this.hasIconRight()) return 'has-icons-left has-icons-right'
+
           return 'has-icons-left'
         }
+        // if(this.rules) return 'has-icons-right'
+        return 'has-icons-right'
+        // if(this.hasIconRight)  return 'has-icons-right'
+
       },
       /**
        * Icon name (MDI) based on the type.
        */
       statusTypeIcon() {
         switch (this.statusType) {
-          case 'is-success': return 'check'
-          case 'is-danger': return 'alert-circle'
-          case 'is-info': return 'information'
-          case 'is-warning': return 'alert'
+          case 'is-success':
+            return 'check'
+          case 'is-danger':
+            return 'alert-circle'
+          case 'is-info':
+            return 'information'
+          case 'is-warning':
+            return 'alert'
         }
       },
       /**
@@ -184,6 +201,12 @@
        * Toggle the visibility of a password-reveal input
        * by changing the type and focus the input right away.
        */
+      isCheckValid(valid, errors) {
+        if (!valid) {
+          return false;
+        }
+        return true;
+      },
       togglePasswordVisibility() {
         this.isPasswordVisible = !this.isPasswordVisible
         this.newType = this.isPasswordVisible ? 'text' : 'password'
@@ -202,6 +225,12 @@
           }
         })
       }
+
     }
   }
 </script>
+<style scoped>
+  .icon {
+    transition: opacity 1s ease-in;
+  }
+</style>

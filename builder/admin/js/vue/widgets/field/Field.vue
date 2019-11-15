@@ -27,13 +27,10 @@
         v-if="horizontal"
         :message="newMessage ? formattedMessage : ''"
         :type="newType">
-      <slot/>
+      <slot @required="" />
     </v-field-body>
     <template v-else>
-      <validation-provider mode="lazy" :name="label" :rules="rules" :vid="vid"  v-slot="{ errors }">
-        <slot/>
-        <span class="help is-danger">{{ errors }}</span>
-      </validation-provider>
+        <slot />
     </template>
     <p
         v-if="newMessage && !horizontal"
@@ -53,7 +50,6 @@
     name: 'VField',
     components: {
       [FieldBody.name]: FieldBody,
-      ValidationProvider,
     },
     props: {
       type: [String, Object],
@@ -65,7 +61,6 @@
       position: String,
       expanded: Boolean,
       horizontal: Boolean,
-      rules: Array|String,
       vid: String,
       addons: {
         type: Boolean,
@@ -84,7 +79,8 @@
         newType: this.type,
         newMessage: this.message,
         fieldLabelSize: null,
-        _isField: true // Used internally by Input and Select
+        _isField: true, // Used internally by Input and Select
+        isRequired: false,
       }
     },
     computed: {

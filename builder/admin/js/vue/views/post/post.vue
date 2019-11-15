@@ -41,7 +41,7 @@
 </template>
 
 <script>
-  import {Text, Select, Modal, Check, Pin} from '../../widgets';
+  import {Select, Modal, Check, Pin} from '../../widgets';
   import PostModel from '../../store/models/PostModel';
 
   const defaultForm = {

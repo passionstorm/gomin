@@ -111,48 +111,523 @@
   width: 32px;
 }
 
+
+//HELP
+//------------------------------------------------------------
 .help {
   display: block;
   font-size: 0.75rem;
   margin-top: 0.25rem;
+
+  &.is-white {
+    color: white;
+  }
+
+  &.is-black {
+    color: #0a0a0a;
+  }
+
+  &.is-light {
+    color: whitesmoke;
+  }
+
+  &.is-dark {
+    color: #363636;
+  }
+
+  &.is-primary, &.is-link {
+    color: #7957d5;
+  }
+
+  &.is-info {
+    color: #167df0;
+  }
+
+  &.is-success {
+    color: #23d160;
+  }
+
+  &.is-warning {
+    color: #ffdd57;
+  }
+
+  &.is-danger {
+    color: #ff3860;
+  }
 }
 
-.help.is-white {
-  color: white;
+//TAGINPUT CONTROLL
+//--------------------------------------------------------------------
+.control {
+  box-sizing: border-box;
+  clear: both;
+  font-size: 1rem;
+  position: relative;
+  text-align: left;
 }
 
-.help.is-black {
-  color: #0a0a0a;
+.control.has-icons-left {
+  .input {
+    &:focus {
+      ~ {
+        .icon {
+          color: #7a7a7a;
+        }
+      }
+    }
+
+    padding-left: 2.25em;
+  }
+
+  .taginput {
+    .taginput-container.is-focusable {
+      &:focus {
+        ~ {
+          .icon {
+            color: #7a7a7a;
+          }
+        }
+      }
+
+      padding-left: 2.25em;
+    }
+
+    .is-small.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .is-medium.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.25rem;
+        }
+      }
+    }
+
+    .is-large.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .select {
+    &:focus {
+      ~ {
+        .icon {
+          color: #7a7a7a;
+        }
+      }
+    }
+
+    select {
+      padding-left: 2.25em;
+    }
+  }
+
+  .input.is-small {
+    ~ {
+      .icon {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .select.is-small {
+    ~ {
+      .icon {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .input.is-medium {
+    ~ {
+      .icon {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .select.is-medium {
+    ~ {
+      .icon {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .input.is-large {
+    ~ {
+      .icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .select.is-large {
+    ~ {
+      .icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .icon {
+    color: #dbdbdb;
+    height: 2.25em;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 2.25em;
+    z-index: 4;
+  }
+
+  .icon.is-left {
+    left: 0;
+  }
 }
 
-.help.is-light {
-  color: whitesmoke;
+.taginput {
+  .control.has-icons-left {
+    .taginput-container.is-focusable {
+      &:focus {
+        ~ {
+          .icon {
+            color: #7a7a7a;
+          }
+        }
+      }
+
+      padding-left: 2.25em;
+    }
+
+    .is-small.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .is-medium.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.25rem;
+        }
+      }
+    }
+
+    .is-large.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .control.has-icons-right {
+    .taginput-container.is-focusable {
+      &:focus {
+        ~ {
+          .icon {
+            color: #7a7a7a;
+          }
+        }
+      }
+
+      padding-right: 2.25em;
+    }
+
+    .is-small.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .is-medium.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.25rem;
+        }
+      }
+    }
+
+    .is-large.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
 }
 
-.help.is-dark {
-  color: #363636;
+.control.has-icons-right {
+  .input {
+    &:focus {
+      ~ {
+        .icon {
+          color: #7a7a7a;
+        }
+      }
+    }
+
+    padding-right: 2.25em;
+  }
+
+  .taginput {
+    .taginput-container.is-focusable {
+      &:focus {
+        ~ {
+          .icon {
+            color: #7a7a7a;
+          }
+        }
+      }
+
+      padding-right: 2.25em;
+    }
+
+    .is-small.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .is-medium.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.25rem;
+        }
+      }
+    }
+
+    .is-large.taginput-container.is-focusable {
+      ~ {
+        .icon {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .select {
+    &:focus {
+      ~ {
+        .icon {
+          color: #7a7a7a;
+        }
+      }
+    }
+
+    select {
+      padding-right: 2.25em;
+    }
+  }
+
+  .input.is-small {
+    ~ {
+      .icon {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .select.is-small {
+    ~ {
+      .icon {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .input.is-medium {
+    ~ {
+      .icon {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .select.is-medium {
+    ~ {
+      .icon {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .input.is-large {
+    ~ {
+      .icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .select.is-large {
+    ~ {
+      .icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .icon {
+    color: #dbdbdb;
+    height: 2.25em;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 2.25em;
+    z-index: 4;
+  }
+
+  .icon.is-right {
+    right: 0;
+  }
 }
 
-.help.is-primary {
-  color: #7957d5;
+.control.is-loading {
+  &::after {
+    position: absolute !important;
+    right: 0.625em;
+    top: 0.625em;
+    z-index: 4;
+  }
 }
 
-.help.is-link {
-  color: #7957d5;
+.control.is-loading.is-small {
+  &:after {
+    font-size: 0.75rem;
+  }
 }
 
-.help.is-info {
-  color: #167df0;
+.control.is-loading.is-medium {
+  &:after {
+    font-size: 1.25rem;
+  }
 }
 
-.help.is-success {
-  color: #23d160;
+.control.is-loading.is-large {
+  &:after {
+    font-size: 1.5rem;
+  }
 }
 
-.help.is-warning {
-  color: #ffdd57;
+//COLOR
+//-------------------------------------------------------------------
+.is-white.input, .taginput .is-white.taginput-container.is-focusable, .is-white.textarea {
+  border-color: white;
 }
 
-.help.is-danger {
-  color: #ff3860;
+.is-white.input:focus, .taginput .is-white.taginput-container.is-focusable:focus, .is-white.textarea:focus, .is-white.is-focused.input, .taginput .is-white.is-focused.taginput-container.is-focusable, .is-white.is-focused.textarea, .is-white.input:active, .taginput .is-white.taginput-container.is-focusable:active, .is-white.textarea:active, .is-white.is-active.input, .taginput .is-white.is-active.taginput-container.is-focusable, .is-white.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.25);
+}
+
+.is-black.input, .taginput .is-black.taginput-container.is-focusable, .is-black.textarea {
+  border-color: #0a0a0a;
+}
+
+.is-black.input:focus, .taginput .is-black.taginput-container.is-focusable:focus, .is-black.textarea:focus, .is-black.is-focused.input, .taginput .is-black.is-focused.taginput-container.is-focusable, .is-black.is-focused.textarea, .is-black.input:active, .taginput .is-black.taginput-container.is-focusable:active, .is-black.textarea:active, .is-black.is-active.input, .taginput .is-black.is-active.taginput-container.is-focusable, .is-black.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(10, 10, 10, 0.25);
+}
+
+.is-light.input, .taginput .is-light.taginput-container.is-focusable, .is-light.textarea {
+  border-color: whitesmoke;
+}
+
+.is-light.input:focus, .taginput .is-light.taginput-container.is-focusable:focus, .is-light.textarea:focus, .is-light.is-focused.input, .taginput .is-light.is-focused.taginput-container.is-focusable, .is-light.is-focused.textarea, .is-light.input:active, .taginput .is-light.taginput-container.is-focusable:active, .is-light.textarea:active, .is-light.is-active.input, .taginput .is-light.is-active.taginput-container.is-focusable, .is-light.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(245, 245, 245, 0.25);
+}
+
+.is-dark.input, .taginput .is-dark.taginput-container.is-focusable, .is-dark.textarea {
+  border-color: #363636;
+}
+
+.is-dark.input:focus, .taginput .is-dark.taginput-container.is-focusable:focus, .is-dark.textarea:focus, .is-dark.is-focused.input, .taginput .is-dark.is-focused.taginput-container.is-focusable, .is-dark.is-focused.textarea, .is-dark.input:active, .taginput .is-dark.taginput-container.is-focusable:active, .is-dark.textarea:active, .is-dark.is-active.input, .taginput .is-dark.is-active.taginput-container.is-focusable, .is-dark.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(54, 54, 54, 0.25);
+}
+
+.is-primary.input, .taginput .is-primary.taginput-container.is-focusable, .is-primary.textarea {
+  border-color: #7957d5;
+}
+
+.is-primary.input:focus, .taginput .is-primary.taginput-container.is-focusable:focus, .is-primary.textarea:focus, .is-primary.is-focused.input, .taginput .is-primary.is-focused.taginput-container.is-focusable, .is-primary.is-focused.textarea, .is-primary.input:active, .taginput .is-primary.taginput-container.is-focusable:active, .is-primary.textarea:active, .is-primary.is-active.input, .taginput .is-primary.is-active.taginput-container.is-focusable, .is-primary.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(121, 87, 213, 0.25);
+}
+
+.is-link.input, .taginput .is-link.taginput-container.is-focusable, .is-link.textarea {
+  border-color: #7957d5;
+}
+
+.is-link.input:focus, .taginput .is-link.taginput-container.is-focusable:focus, .is-link.textarea:focus, .is-link.is-focused.input, .taginput .is-link.is-focused.taginput-container.is-focusable, .is-link.is-focused.textarea, .is-link.input:active, .taginput .is-link.taginput-container.is-focusable:active, .is-link.textarea:active, .is-link.is-active.input, .taginput .is-link.is-active.taginput-container.is-focusable, .is-link.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(121, 87, 213, 0.25);
+}
+
+.is-info.input, .taginput .is-info.taginput-container.is-focusable, .is-info.textarea {
+  border-color: #167df0;
+}
+
+.is-info.input:focus, .taginput .is-info.taginput-container.is-focusable:focus, .is-info.textarea:focus, .is-info.is-focused.input, .taginput .is-info.is-focused.taginput-container.is-focusable, .is-info.is-focused.textarea, .is-info.input:active, .taginput .is-info.taginput-container.is-focusable:active, .is-info.textarea:active, .is-info.is-active.input, .taginput .is-info.is-active.taginput-container.is-focusable, .is-info.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(22, 125, 240, 0.25);
+}
+
+.is-success.input, .taginput .is-success.taginput-container.is-focusable, .is-success.textarea {
+  border-color: #23d160;
+}
+
+.is-success.input:focus, .taginput .is-success.taginput-container.is-focusable:focus, .is-success.textarea:focus, .is-success.is-focused.input, .taginput .is-success.is-focused.taginput-container.is-focusable, .is-success.is-focused.textarea, .is-success.input:active, .taginput .is-success.taginput-container.is-focusable:active, .is-success.textarea:active, .is-success.is-active.input, .taginput .is-success.is-active.taginput-container.is-focusable, .is-success.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(35, 209, 96, 0.25);
+}
+
+.is-warning.input, .taginput .is-warning.taginput-container.is-focusable, .is-warning.textarea {
+  border-color: #ffdd57;
+}
+
+.is-warning.input:focus, .taginput .is-warning.taginput-container.is-focusable:focus, .is-warning.textarea:focus, .is-warning.is-focused.input, .taginput .is-warning.is-focused.taginput-container.is-focusable, .is-warning.is-focused.textarea, .is-warning.input:active, .taginput .is-warning.taginput-container.is-focusable:active, .is-warning.textarea:active, .is-warning.is-active.input, .taginput .is-warning.is-active.taginput-container.is-focusable, .is-warning.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(255, 221, 87, 0.25);
+}
+
+.is-danger.input, .taginput .is-danger.taginput-container.is-focusable, .is-danger.textarea {
+  border-color: #ff3860;
+}
+
+.is-danger.input:focus, .taginput .is-danger.taginput-container.is-focusable:focus, .is-danger.textarea:focus, .is-danger.is-focused.input, .taginput .is-danger.is-focused.taginput-container.is-focusable, .is-danger.is-focused.textarea, .is-danger.input:active, .taginput .is-danger.taginput-container.is-focusable:active, .is-danger.textarea:active, .is-danger.is-active.input, .taginput .is-danger.is-active.taginput-container.is-focusable, .is-danger.is-active.textarea {
+  box-shadow: 0 0 0 0.125em rgba(255, 56, 96, 0.25);
+}
+
+.is-small.input, .taginput .is-small.taginput-container.is-focusable, .is-small.textarea {
+  border-radius: 2px;
+  font-size: 0.75rem;
+}
+
+.is-medium.input, .taginput .is-medium.taginput-container.is-focusable, .is-medium.textarea {
+  font-size: 1.25rem;
+}
+
+.is-large.input, .taginput .is-large.taginput-container.is-focusable, .is-large.textarea {
+  font-size: 1.5rem;
+}
+
+.is-fullwidth.input, .taginput .is-fullwidth.taginput-container.is-focusable, .is-fullwidth.textarea {
+  display: block;
+  width: 100%;
+}
+
+.is-inline.input, .taginput .is-inline.taginput-container.is-focusable, .is-inline.textarea {
+  display: inline;
+  width: auto;
 }

@@ -5,7 +5,6 @@ import Radio from './Radio';
 import Icon from './Icon';
 import Select from './Select';
 import Tab from './Tab';
-import Text from './Text';
 import Card from './Card';
 import Editor from './Editor';
 import Field from  './field/Field'
@@ -18,7 +17,6 @@ export {
   Icon,
   Select,
   Tab,
-  Text,
   Card,
   Editor,
   Field,

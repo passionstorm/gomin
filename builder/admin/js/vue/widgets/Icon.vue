@@ -1,45 +1,59 @@
 <template>
-    <i class="icon" v-html="loadIcon"></i> 
+   <span class="icon" :class="classes" v-if="name" :style="styles">
+        <i v-html="loadIcon"></i>
+   </span>
 </template>
 
 <script>
-export default {
-  name: 'icon',
-  props: {
-    name: {},
-    size: {
-      default: 'normal',
-    },
-    modifier: {
-      default: null,
-    },
-    fixAlign: {
-      default: true,
-    },
-  },
-  components: {
-  },
-  computed: {
-    loadIcon(){
-      return require(`../assets/images/icons/${this.name}.svg`)
-    }
-  },
-  created(){
-    // console.log(this.loadIcon);
-
+  const defaultSize = {
+    'sm': 'is-small',
+    'm': 'is-medium',
+    'l': 'is-large',
   }
-}
+  export default {
+    name: 'icon',
+    props: {
+      name: String,
+      size: {
+        default: 'normal',
+      },
+      modifier: {
+        default: null,
+      },
+      fixAlign: {
+        default: true,
+      },
+      color: String,
+    },
+    components: {},
+    computed: {
+      styles() {
+        return {
+          color: this.color,
+        }
+      },
+      classes() {
+        return [
+          defaultSize[this.size],
+        ]
+      },
+      loadIcon() {
+        return require(`../assets/images/icons/${this.name}.svg`)
+      }
+    },
+    created() {
+      // console.log(this.loadIcon);
+
+    }
+  }
 </script>
 
-<style  scoped>
-.icon {
-    display: inline-block;
-    font-size: 1.1rem;
-    font-weight: bold;
-    fill: currentColor;
-}
-.icon svg {
+<style scoped>
+  .icon {
+  }
+
+  .icon svg {
     width: 100%;
     height: 100%;
-}
+  }
 </style>
