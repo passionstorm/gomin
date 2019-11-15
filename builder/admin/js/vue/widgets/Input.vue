@@ -1,5 +1,5 @@
 <template>
-  <ValidationProvider :rules="rules" v-slot="{ errors, valid }" :name="name" :vid="vid">
+  <ValidationProvider :mode="validMode" :rules="rules" v-slot="{ errors, valid }" :name="name" :vid="vid">
     <div class="control" :class="rootClasses">
       <input
           v-if="type !== 'textarea'"
@@ -26,26 +26,9 @@
           @blur="onBlur"
           @focus="onFocus"/>
 
-      <!--      <icon class="is-left" v-if="icon" :name="icon"/>-->
-
-      <icon size="sm" v-if="isCheckValid(valid, errors)" name="check" class="is-right icon-checker" color="green"></icon>
-      <!--    <b-icon-->
-      <!--        v-if="icon"-->
-      <!--        class="is-left"-->
-      <!--        :icon="icon"-->
-      <!--        :pack="iconPack"-->
-      <!--        :size="iconSize"/>-->
-
-      <!--    <b-icon-->
-      <!--        v-if="!loading && (passwordReveal || statusTypeIcon)"-->
-      <!--        class="is-right"-->
-      <!--        :class="{ 'is-clickable': passwordReveal }"-->
-      <!--        :icon="passwordReveal ? passwordVisibleIcon : statusTypeIcon"-->
-      <!--        :pack="iconPack"-->
-      <!--        :size="iconSize"-->
-      <!--        :type="!passwordReveal ? statusType : 'is-primary'"-->
-      <!--        both-->
-      <!--        @click.native="togglePasswordVisibility"/>-->
+      <icon class="is-left" v-if="icon" :name="icon"/>
+      <icon size="sm" v-if="isCheckValid(valid, errors)" name="check" class="is-right icon-checker"
+            color="green"></icon>
       <span class="help is-danger" style="display: inline-flex">{{ errors[0] }}</span>
       <small
           v-if="maxlength && hasCounter && type !== 'number'"
@@ -78,6 +61,10 @@
       name: String,
       rules: String,
       icon: String,
+      validMode: {
+        type: String,
+        default: 'lazy'
+      },
       passwordReveal: Boolean,
       hasCounter: {
         type: Boolean,
@@ -99,7 +86,7 @@
             : 'input'
       }
     },
-    created(){
+    created() {
       this.$emit('required', true);
     },
     computed: {

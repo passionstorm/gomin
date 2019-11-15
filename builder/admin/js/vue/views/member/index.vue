@@ -3,72 +3,65 @@
     <div class="d-flex mb-2">
       <div class="mr-auto"></div>
       <div>
-        <a v-show="selectedItems.length > 0" class="btn btn-danger" href="javascript:;">Xoá</a>
+        <a v-show="checkedRows.length" @click="del" class="btn btn-danger" href="javascript:;">Xoá</a>
         <router-link to="edit" class="btn btn-d">Thêm thành viên</router-link>
       </div>
     </div>
     <div class="card">
       <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th v-for="header in headers" scope="col">{{header}}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="i in items">
-              <td><check v-model="selectedItems" :val="i.username" checked/></td>
-              <td><img :src="i.avatar"/></td>
-              <td>{{i.username}}</td>
-              <td>{{i.name}}</td>
-              <td>{{i.email}}</td>
-              <td>{{i.phone}}</td>
-              <td>
-                <div class="d-flex">
-                  <router-link class="btn" :to="{name: 'edit', params: {id: '1'}}" >
-                    <icon class="btn btn-icon" name="pen" color="red"></icon>
-                  </router-link>
-
-                  <button type="button" class="btn" @click="del(i)">
-                    <icon class="btn btn-icon" name="trash"></icon>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+        <v-table
+            class="table table-striped"
+            :data="data"
+            :columns="columns"
+            :checked-rows.sync="checkedRows"
+            :selected.sync="selected"
+            checkable
+        >
+          <template slot="bottom-left">
+            <b>Total checked</b>: {{ checkedRows.length }}
+          </template>
+        </v-table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import json from './user.json';
-  import {Modal, Icon, Pin, Check, Radio} from '../../widgets/index';
+  import {Modal, Icon, Pin, Check, Radio, VTable} from '../../widgets';
   import {ENTITY, default as MemberModel} from '../../store/models/MemberModel';
 
   export default {
-    components: {Modal, Icon, Check, Radio},
+    components: {Modal, Icon, Check, Radio, VTable},
     data() {
       return {
-        items: json,
+        data: [],
+        selected: {},
+        columns: [
+          {
+            field: 'username',
+            label: 'Username',
+          },
+          {
+            field: 'name',
+            label: 'Name',
+          },
+          {
+            field: 'email',
+            label: 'Email',
+            centered: true
+          },
+          {
+            field: 'phone',
+            label: 'phone',
+          }
+        ],
+        checkedRows: [],
         entity: ENTITY,
         editModal: false,
-        selectedItems: ['Jakayla_Crooks86'],
       };
     },
-    computed: {
-      headers() {
-        // return this.Model.nonRelationFields()
-        return [
-          '', 'username', 'name', 'email', 'phone', '',
-        ];
-      },
-    },
+    computed: {},
     created() {
-      // console.log(UserModel.fieldsKeys());
     },
     methods: {
       edit(item) {
@@ -76,12 +69,15 @@
         window.MemberForm.setEditedItem(item)
         this.editModal = true;
       },
-      del(item) {
-
+      del() {
+        let ids = this.checkedRows.map(e => e._id);
+        ids.forEach(id => MemberModel.$delete(id))
+        this.data = MemberModel.query().all()
       }
     },
     async beforeMount() {
-      await MemberModel.all()
+      await MemberModel.$fetch()
+      this.data = MemberModel.query().all()
     },
   };
 </script>

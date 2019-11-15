@@ -1,7 +1,7 @@
 <template>
   <ValidationObserver ref="form" tag="form" @submit.prevent="onSubmit">
-    <field label="Username"  class="col-sm-10" >
-      <v-input name="username" rules="required|min:3|max:30" v-model="editedItem.username" maxlength="30"/>
+    <field required="true" label="Username" class="col-sm-10">
+      <v-input name="username" rules="required|min:3|max:30|username" v-model="editedItem.username" maxlength="30"/>
     </field>
     <field label="Chức vụ" class="col-sm-10">
       <div class="block col-sm-10">
@@ -10,19 +10,21 @@
         </radio>
       </div>
     </field>
-    <field label="Mật khẩu" class="col-sm-10" >
-      <v-input type="password" name="Mật khẩu" v-model="editedItem.password" rules="required|min:6|max:20" vid="password"/>
+    <field required="true" label="Mật khẩu" class="col-sm-10">
+      <v-input type="password" name="Mật khẩu" v-model="editedItem.password" rules="required|min:6|max:20"
+               vid="password"/>
     </field>
-    <field label="Xác nhận mật khẩu" class="col-sm-10" >
-      <v-input name="Xác nhận mật khẩu" type="password" v-model="editedItem.rePassword" rules="required|confirmed:password"/>
+    <field required="true" label="Xác nhận mật khẩu" class="col-sm-10">
+      <v-input name="Xác nhận mật khẩu" type="password" v-model="editedItem.rePassword"
+               rules="required|confirmed:password"/>
     </field>
-    <field label="Tên" class="col-sm-10">
-      <v-input title="Tên" v-model="editedItem.name"/>
+    <field required="true" label="Tên" class="col-sm-10">
+      <v-input name="Tên" title="Tên" v-model="editedItem.name" rules="required"/>
     </field>
-    <field label="Email" class="col-sm-10" >
+    <field required="true" label="Email" class="col-sm-10">
       <v-input name="Email" v-model="editedItem.email" rules="required|email"/>
     </field>
-    <field  label="Số điện thoại" class="col-sm-10">
+    <field label="Số điện thoại" class="col-sm-10">
       <v-input rules="phone" v-model="editedItem.phone"/>
     </field>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -31,18 +33,19 @@
 
 <script>
   import {ROLE_TYPES} from '../../utils/constant';
-  import {Field, Radio, VInput} from '../../widgets';
-  import {ValidationObserver} from 'vee-validate';
-
+  import {Field, Radio, VInput, Collapse, Icon} from '../../widgets';
+  import {ValidationObserver, extend} from 'vee-validate';
+  import MemberModel from '../../store/models/MemberModel'
   export default {
     components: {
       VInput,
       Field,
       ValidationObserver,
+      Collapse,
+      Icon,
       Radio,
     },
     props: {},
-
     data() {
       return {
         editedItem: {
@@ -53,23 +56,39 @@
     },
     watch: {},
     mounted() {
+      extend('username', (value, {other}) => {
+        if (!value.match(/^[a-zA-Z0-9]+$/)) return 'username chưa đúng';
+
+        if(MemberModel.query().where('username', value).first()) return 'username đã tốn tại'
+
+        return true;
+      });
+
       this.$route.meta.title = this.$route.params.id ? 'Cập nhật thành viên' : 'Thêm thành viên';
     },
     methods: {
       async onSubmit() {
         const isValid = await this.$refs.form.validate();
         if (!isValid) return;
+        await MemberModel.$create({
+          data: this.editedItem
+        })
         this.$app.notification.open({
-          message: 'Something happened correctly!',
+          message: 'Đã thêm thành viên mới!',
           type: 'is-success',
         });
+        this.resetForm()
+      },
+      resetForm() {
+        this.$refs.form.reset();
+        this.editedItem = Object.assign({}, {});
       },
     },
+
     beforeCreate() {
       window.MemberForm = this;
     },
     created() {
-      // console.log(MemberModel.fields())
     },
     computed: {},
   };

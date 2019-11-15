@@ -7,8 +7,11 @@ import Select from './Select';
 import Tab from './Tab';
 import Card from './Card';
 import Editor from './Editor';
-import Field from  './field/Field'
-import VInput from  './Input'
+import Field from './field/Field';
+import VInput from './Input';
+import Collapse from './Collapse';
+import VTable from './table/Table';
+
 export {
   Pin,
   Check,
@@ -21,4 +24,6 @@ export {
   Editor,
   Field,
   VInput,
+  VTable,
+  Collapse,
 };

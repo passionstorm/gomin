@@ -16,7 +16,7 @@ export default class UserModel extends BaseModel {
       password: this.string('123456'),
       phone: this.string(''),
       address: this.string(''),
-      status: this.number('active'),
+      status: this.number(1),
       hash: this.string(''),
       token: this.string('qqyzkzldrx'),
       role: this.attr(null),

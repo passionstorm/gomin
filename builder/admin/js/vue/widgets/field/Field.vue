@@ -12,6 +12,7 @@
         <slot v-if="$slots.label" name="label"/>
         <template v-else>{{ label }}</template>
       </label>
+      <span class="is-required" v-if="required">*</span>
     </div>
     <template v-else>
       <label
@@ -22,15 +23,16 @@
         <slot v-if="$slots.label" name="label"/>
         <template v-else>{{ label }}</template>
       </label>
+      <span class="is-required" v-if="required">*</span>
     </template>
     <v-field-body
         v-if="horizontal"
         :message="newMessage ? formattedMessage : ''"
         :type="newType">
-      <slot @required="" />
+      <slot/>
     </v-field-body>
     <template v-else>
-        <slot />
+      <slot/>
     </template>
     <p
         v-if="newMessage && !horizontal"
@@ -61,7 +63,7 @@
       position: String,
       expanded: Boolean,
       horizontal: Boolean,
-      vid: String,
+      required: String,
       addons: {
         type: Boolean,
         default: true
@@ -80,7 +82,6 @@
         newMessage: this.message,
         fieldLabelSize: null,
         _isField: true, // Used internally by Input and Select
-        isRequired: false,
       }
     },
     computed: {
@@ -216,3 +217,8 @@
     }
   }
 </script>
+<style scoped>
+  .is-required{
+    color: #ff3860; font-weight: bold
+  }
+</style>
