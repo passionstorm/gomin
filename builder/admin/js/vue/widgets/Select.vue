@@ -2,7 +2,7 @@
   <div
       class="control"
       :class="{ 'is-expanded': expanded, 'has-icons-left': icon }">
-        <span class="select" :class="spanClasses">
+        <span class="select is-info" :class="spanClasses">
             <select
                 v-model="computedValue"
                 ref="select"
@@ -41,9 +41,9 @@
   import FormElementMixin from './mixins/form.mixin'
 
   export default {
-    name: 'Select',
+    name: 'VSelect',
     components: {
-      [Icon.name]: Icon
+      Icon
     },
     mixins: [FormElementMixin],
     inheritAttrs: false,

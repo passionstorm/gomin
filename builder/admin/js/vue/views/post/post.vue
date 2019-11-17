@@ -12,18 +12,23 @@
         </div>
       </div>
     </pin>
-    <div class="row">
-      <div class="col-12">
-        <form action method="get">
-          <text v-model="form.title" type="'text'" title="Tiêu đề*" placeholder="Tiêu đề"/>
-          <text v-model="form.summary" type="textarea" title="Mô tả ngắn*"/>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Nội dung</label>
-            <editor class="col-sm-10" ref="editor" v-model="form.body" :height="400"/>
-          </div>
-        </form>
-      </div>
-    </div>
+    <ValidationObserver ref="form" tag="form" @submit.prevent="onSubmit">
+      <field class="col-sm-8" label="Tiêu đề" required="required">
+        <v-input rules="required" maxlength="30" v-model="form.title" type="'text'" title="Tiêu đề*" placeholder="Tiêu đề"/>
+      </field>
+      <field label="Danh muc">
+        <taginput :data="categories" autocomplete v-model="editedItem.categories" icon="label"
+                  placeholder="Add a tag"
+        ></taginput>
+      </field>
+      <field class="col-sm-8" label="Mô tả ngắn" required="required">
+        <v-input v-model="form.summary" type="textarea" rules="required" maxlength="100"/>
+      </field>
+      <field class="col-sm-8" label="Nội dung">
+        <editor ref="editor" v-model="form.body" :height="400"/>
+      </field>
+
+    </ValidationObserver>
     <modal v-model="modal.reset">
       <template slot="header">
         <h5 class="modal-title">Xác nhận</h5>
@@ -41,8 +46,9 @@
 </template>
 
 <script>
-  import {Select, Modal, Check, Pin} from '../../widgets';
+  import {Check, Field, Modal, Pin, Taginput, VInput, VSelect} from '../../widgets';
   import PostModel from '../../store/models/PostModel';
+  import {ValidationObserver} from 'vee-validate';
 
   const defaultForm = {
     status: '1',
@@ -60,11 +66,14 @@
 
   export default {
     components: {
-      Pin, Text, Pin, Select, Modal, Check,
+      VInput, Field,
+      Pin, VSelect, Modal, Check, ValidationObserver, Taginput,
       editor: () => import('../../widgets/Editor'),
     },
     data() {
       return {
+        editedItem: {},
+        categories: ['draft', 'publish'],
         statusOptions: {
           0: 'draft',
           1: 'publish',

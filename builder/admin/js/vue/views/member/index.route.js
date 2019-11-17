@@ -1,19 +1,19 @@
 import Layout from '../../components/layouts/DefaultLayout';
 
 const t = {
-  path: '/user',
+  path: '/member',
   component: Layout,
   type: 'bar',
   index: 1,
   meta: {title: 'Nhân sự', icon: 'users'},
   children: [
     {
-      path: 'index',
-      name: 'index',
+      path: '',
+      name: 'member_list',
       meta: {
         noCache: true,
         title: 'Danh sách',
-        roles: ['admin', 'editor'],
+        roles: ['editor'],
         icon: 'address_book',
       },
       component: () => import('./index'),

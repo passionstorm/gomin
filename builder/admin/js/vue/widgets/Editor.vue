@@ -57,6 +57,7 @@
 
 <style scoped>
   .ck-content p{
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
   }
 </style>

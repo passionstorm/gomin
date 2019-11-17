@@ -50,6 +50,7 @@
           <th class="checkbox-cell" v-if="checkable && checkboxPosition === 'left'">
             <template v-if="headerCheckable">
               <v-check
+                  color="is-success"
                   :value="isAllChecked"
                   :disabled="isAllUncheckable"
                   @change.native="checkAll"/>
@@ -103,6 +104,7 @@
           <th class="checkbox-cell" v-if="checkable && checkboxPosition === 'right'">
             <template v-if="headerCheckable">
               <v-check
+                  color="is-success"
                   :value="isAllChecked"
                   :disabled="isAllUncheckable"
                   @change.native="checkAll"/>
@@ -169,6 +171,7 @@
                 class="checkbox-cell"
                 v-if="checkable && checkboxPosition === 'left'">
               <v-check
+                  color="is-success"
                   :disabled="!isRowCheckable(row)"
                   :value="isRowChecked(row)"
                   @click.native.prevent.stop="checkRow(row, index, $event)"
@@ -181,7 +184,7 @@
                 :index="index"
             />
             <template v-else>
-              <b-table-column
+              <v-table-column
                   v-for="column in newColumns"
                   v-bind="column"
                   :key="column.field"
@@ -193,13 +196,14 @@
                 <template v-else>
                   {{ getValueByPath(row, column.field) }}
                 </template>
-              </b-table-column>
+              </v-table-column>
             </template>
 
             <td
                 class="checkbox-cell"
                 v-if="checkable && checkboxPosition === 'right'">
               <v-check
+                  color="is-success"
                   :disabled="!isRowCheckable(row)"
                   :value="isRowChecked(row)"
                   @click.native.prevent.stop="checkRow(row, index, $event)"
@@ -278,17 +282,14 @@
 <script>
   import {getValueByPath, indexOf} from '../../utils'
   import VCheck from '../Check'
-  import Icon from '../Icon'
-  import Input from '../Input'
-  import Pagination from '../pagination/Pagination'
+  import {Icon, VInput, VPagination, VTableColumn} from '../'
   import SlotComponent from '../mixins/slot.mixin'
   import BTableMobileSort from './TableMobileSort'
-  import BTableColumn from './TableColumn'
 
   export default {
     name: 'VTable',
     components: {
-      VCheck, Input, Icon, Pagination, SlotComponent, BTableMobileSort,BTableColumn
+      VCheck, VInput, Icon, VPagination, SlotComponent, BTableMobileSort,VTableColumn
     },
     props: {
       data: {

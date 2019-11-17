@@ -1,15 +1,23 @@
-@import "../../node_modules/bootstrap-scss/bootstrap";
+@import "../../node_modules/bootstrap-scss/bootstrap-grid";
+@import "../../node_modules/bootstrap-scss/mixins";
+@import "../../node_modules/bootstrap-scss/buttons";
 @import "variables";
-@import "reboot";
+@import "mixin";
 @import "main_sidebar";
 @import "button";
-@import "checkbox";
-@import "radio";
-@import "notices";
-@import "notification";
-@import "function";
-@import "form";
-@import "icon";
+@import "bulma";
+
+.icon i{
+  display: inline-flex;
+}
+
+.label {
+  display: inline-flex;
+}
+.icon.is-small svg{
+  width: 1rem;
+  height: 1rem;
+}
 
 main {
   padding: 15px 0.5rem;

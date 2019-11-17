@@ -4,8 +4,8 @@
       <input
           v-if="type !== 'textarea'"
           ref="input"
-          class="form-control input"
-          :class="[inputClasses, customClass, {'is-danger': errors.length > 0}, {'is-success': valid}]"
+          class="input"
+          :class="[inputClasses, customClass, {'is-danger': errors.length > 0}, {'is-success': rules && valid}]"
           :type="newType"
           :autocomplete="newAutocomplete"
           :maxlength="maxlength"
@@ -14,22 +14,28 @@
           @input="onInput"
           @blur="onBlur"
           @focus="onFocus">
-      <textarea
+      <transition
           v-else
-          ref="textarea"
-          class="textarea"
-          :class="[inputClasses, customClass]"
-          :maxlength="maxlength"
-          :value="computedValue"
-          v-bind="$attrs"
-          @input="onInput"
-          @blur="onBlur"
-          @focus="onFocus"/>
+          enter-active-class="fadeInDown"
+          leave-active-class="fadeOut">
+        <textarea
+            :rows="textAreaRow"
+            ref="textarea"
+            class="textarea"
+            :class="[inputClasses, customClass, {'is-danger': errors.length > 0}, {'is-success': rules && valid}]"
+            :maxlength="maxlength"
+            :value="computedValue"
+            v-bind="$attrs"
+            @input="onInput"
+            @blur="onBlur"
+            @focus="onFocus"></textarea>
+      </transition>
+
 
       <icon class="is-left" v-if="icon" :name="icon"/>
       <icon size="sm" v-if="isCheckValid(valid, errors)" name="check" class="is-right icon-checker"
             color="green"></icon>
-      <span class="help is-danger" style="display: inline-flex">{{ errors[0] }}</span>
+      <span v-if="!!errors.length" class="help is-danger" style="display: inline-flex">{{ errors[0] }}</span>
       <small
           v-if="maxlength && hasCounter && type !== 'number'"
           class="help counter"
@@ -77,6 +83,7 @@
     },
     data() {
       return {
+        textAreaRow: 1,
         newValue: this.value,
         newType: this.type,
         newAutocomplete: this.autocomplete || config.defaultInputAutocomplete,
@@ -126,7 +133,7 @@
        */
       iconPosition() {
         if (this.icon) {
-          if (this.hasIconRight()) return 'has-icons-left has-icons-right'
+          if (this.hasIconRight) return 'has-icons-left has-icons-right'
 
           return 'has-icons-left'
         }
@@ -180,7 +187,22 @@
        *   1. Set internal value.
        */
       value(value) {
+        if(this.type === 'textarea'){
+          this.textAreaRow = (value.match(/\n/g)||[]).length + 1;
+        }
+
         this.newValue = value
+      },
+      isFocused(val){
+        if(this.type !== 'textarea') return;
+        const numRow = (this.computedValue.match(/\n/g)||[]).length;
+        if(val){
+          this.textAreaRow = numRow + 1;
+          return;
+        }
+        this.textAreaRow = numRow > 3 ? 3: numRow + 1 ;
+        console.log( this.textAreaRow );
+
       }
     },
     methods: {
@@ -189,6 +211,7 @@
        * by changing the type and focus the input right away.
        */
       isCheckValid(valid, errors) {
+        if(!this.rules) return false;
         if (!valid) {
           return false;
         }
@@ -219,5 +242,13 @@
 <style scoped>
   .icon {
     transition: opacity 1s ease-in;
+  }
+  .icon-checker svg{
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+  textarea{
+    resize: none;
+    overflow-y: hidden;
   }
 </style>

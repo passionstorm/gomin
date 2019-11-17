@@ -47,9 +47,8 @@
   import {ValidationProvider} from 'vee-validate';
   import config from '../../utils/config_element'
   import FieldBody from './FieldBody'
-
   export default {
-    name: 'VField',
+    name: 'Field',
     components: {
       [FieldBody.name]: FieldBody,
     },
@@ -221,4 +220,6 @@
   .is-required{
     color: #ff3860; font-weight: bold
   }
+
+
 </style>

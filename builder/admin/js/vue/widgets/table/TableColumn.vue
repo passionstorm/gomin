@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    name: 'BTableColumn',
+    name: 'VTableColumn',
     props: {
       label: String,
       customKey: [String, Number],

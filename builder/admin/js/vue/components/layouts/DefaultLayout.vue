@@ -11,7 +11,9 @@
 
             <section class="content app_main">
                 <main class="container-fluid">
-                    <router-view  />
+                    <transition name="fade-in-right">
+                        <router-view  />
+                    </transition>
                 </main>
             </section>
             <app-footer>

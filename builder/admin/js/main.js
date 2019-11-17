@@ -4,10 +4,13 @@ import router from './vue/router';
 import store from './vue/store';
 import toast from './vue/widgets/toast';
 import notification from './vue/widgets/notification';
+import dialog from './vue/widgets/dialog';
+
 import {loadLocale} from './vue/validator';
 
 Vue.use(toast);
 Vue.use(notification);
+Vue.use(dialog);
 
 let locale = 'vi';
 loadLocale(locale);
