@@ -69,7 +69,6 @@
     },
     created() {
       this.computeBreadcrumbs();
-      console.log();
     },
   };
 </script>

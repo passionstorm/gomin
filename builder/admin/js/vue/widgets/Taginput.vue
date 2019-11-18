@@ -23,7 +23,7 @@
           v-if="hasInput"
           v-model="newTag"
           v-bind="$attrs"
-          :data="data"
+          :data="selectItems"
           :field="field"
           :icon="icon"
           :icon-pack="iconPack"
@@ -65,7 +65,7 @@
   import {getValueByPath} from '../utils';
   import {Autocomplete,Tag} from './';
   import FormElementMixin from './mixins/form.mixin';
-
+  import {difference} from 'lodash-es'
   export default {
     name: 'Taginput',
     components: {
@@ -116,6 +116,7 @@
       return {
         tags: this.value || [],
         newTag: '',
+        selectItems: this.data.slice(),
         _elementRef: 'input',
         _isTaginput: true,
       };
@@ -165,6 +166,7 @@
         this.tags = value;
       },
       newTag(value) {
+        this.selectItems = difference(this.data, this.tags)
         this.$emit('typing', value.trim());
       },
       hasInput() {

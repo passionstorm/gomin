@@ -1,26 +1,28 @@
 <template>
   <div>
-    <pin :stickyTop=0>
-      <div class="d-flex bd-highlight mb-2">
-        <div class="mr-auto p-2 bd-highlight">
-          <a href="javascript:;" class="btn btn-d">❮ Quay lai</a>
-        </div>
-        <div class="p-2 bd-highlight">
-          <a href="javascript:;" class="btn btn-danger" @click="modal.reset = true">Reset</a>
-          <a href="javascript:;" class="btn btn-d ">Lưu</a>
-          <a href="javascript:;" @click="submit" class="btn btn-primary">Đăng</a>
-        </div>
+    <ValidationObserver ref="form" tag="form" @submit.prevent="onSubmit" v-slot="{invalid}">
+    <div class="d-flex bd-highlight mb-2">
+      <div class="mr-auto p-2 bd-highlight">
+        <a href="javascript:;" class="btn btn-d">❮ Quay lai</a>
       </div>
-    </pin>
-    <ValidationObserver ref="form" tag="form" @submit.prevent="onSubmit">
-      <field class="col-sm-8" label="Tiêu đề" required="required">
-        <v-input rules="required" maxlength="30" v-model="form.title" type="'text'" title="Tiêu đề*" placeholder="Tiêu đề"/>
-      </field>
-      <field label="Danh muc">
-        <taginput :data="categories" autocomplete v-model="editedItem.categories" icon="label"
-                  placeholder="Add a tag"
-        ></taginput>
-      </field>
+      <div class="p-2 bd-highlight">
+        <a href="javascript:;" class="btn btn-danger" @click="modal.reset = true">Reset</a>
+        <a href="javascript:;" class="btn btn-d ">Lưu</a>
+        <a :disabled="invalid" href="javascript:;" @click="onSubmit" class="btn btn-primary">Đăng</a>
+      </div>
+    </div>
+
+
+      <div class="row">
+        <field class="col-sm-8" label="Tiêu đề" required="required">
+          <v-input vid="title" rules="required" maxlength="30" v-model="form.title" type="'text'" title="Tiêu đề*" placeholder="Tiêu đề"/>
+        </field>
+        <field label="Danh muc" class="col-sm-3">
+          <taginput :data="filterCategory" autocomplete v-model="form.categories" icon="label"
+                    placeholder="Add a tag" field="name" @typing="getFilteredTags"
+          ></taginput>
+        </field>
+      </div>
       <field class="col-sm-8" label="Mô tả ngắn" required="required">
         <v-input v-model="form.summary" type="textarea" rules="required" maxlength="100"/>
       </field>
@@ -41,7 +43,6 @@
         <button type="button" class="btn btn-primary" autofocus @click="reset">YES</button>
       </template>
     </modal>
-    <pre>{{form}}</pre>
   </div>
 </template>
 
@@ -57,6 +58,7 @@
     summary: '', // 文章摘要
     source_uri: '', // 文章外链
     image_uri: '', // 文章图片
+    categories: [],
     display_time: undefined, // 前台展示时间
     id: undefined,
     platforms: ['a-platform'],
@@ -72,8 +74,14 @@
     },
     data() {
       return {
+        tags: [],
         editedItem: {},
-        categories: ['draft', 'publish'],
+        categories: [
+          {
+            id: 0,
+            name: 'ban hang',
+          }, {id: 1, name: 'duoc'}, {id: 3, name: 'nha cua'}],
+        filterCategory: this.categories,
         statusOptions: {
           0: 'draft',
           1: 'publish',
@@ -88,17 +96,23 @@
       };
     },
     methods: {
+      getFilteredTags(text) {
+        this.filterCategory = this.categories.filter((i) => {
+          return i.name.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0;
+        });
+      },
       reset() {
         this.form = Object.assign({}, defaultForm);
         this.modal.reset = false;
       },
-      submit() {
-        PostModel.insert({data: this.form});
-        this.reset();
+      onSubmit() {
+        this.$refs.form.validate();
+        // PostModel.insert({data: this.form});
+        // this.reset();
       },
     },
     created() {
-
+      console.log(this.errors);
     },
     mounted() {
 

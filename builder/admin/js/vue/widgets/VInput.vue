@@ -201,8 +201,6 @@
           return;
         }
         this.textAreaRow = numRow > 3 ? 3: numRow + 1 ;
-        console.log( this.textAreaRow );
-
       }
     },
     methods: {
