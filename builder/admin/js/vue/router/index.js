@@ -54,43 +54,24 @@ export const constantRoutes = [
   }
  */
 let _asyncRoutes = [
-  {
-    path: '/post',
-    component: Layout,
-    type: 'bar',
-    children: [
-      {
-        path: 'index',
-        name: 'post',
-        meta: {
-          noCache: true,
-          title: 'Bài viết', group: 'apps',
-          roles: ['admin', 'editor'],
-          icon: 'edit',
-        },
-        component: () => import('../views/post/post'),
-      },
-    ],
-  },
-
-  {
-    path: '/goods',
-    meta: {title: 'Sản phẩm', icon: 'cart'},
-    component: Layout,
-    type: 'bar',
-    children: [
-      {
-        path: 'menu1',
-        name: 'goods_edit',
-        meta: {
-          noCache: true,
-          title: 'menu1',
-          roles: ['admin', 'editor'],
-        },
-        component: () => import('../views/post/post'),
-      },
-    ],
-  },
+  // {
+  //   path: '/goods',
+  //   meta: {title: 'Sản phẩm', icon: 'cart'},
+  //   component: Layout,
+  //   type: 'bar',
+  //   children: [
+  //     {
+  //       path: 'menu1',
+  //       name: 'goods_edit',
+  //       meta: {
+  //         noCache: true,
+  //         title: 'menu1',
+  //         roles: ['admin', 'editor'],
+  //       },
+  //       component: () => import('../views/post/post'),
+  //     },
+  //   ],
+  // },
 ];
 
 const collectRoute = require.context('../views', true, /index.route\.js$/);

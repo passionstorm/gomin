@@ -36,7 +36,7 @@
 
             </v-table-column>
           </template>
-          <template slot="bottom-left">
+          <template slot="top-left">
               <div class="p-2">
                 <b>Đã chọn</b>: {{ checkedRows.length }}
               </div>

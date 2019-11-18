@@ -4,14 +4,12 @@ import router from './vue/router';
 import store from './vue/store';
 import toast from './vue/widgets/toast';
 import notification from './vue/widgets/notification';
-import dialog from './vue/widgets/dialog';
-
 import {loadLocale} from './vue/validator';
+import VueFroala from 'vue-froala-wysiwyg';
 
 Vue.use(toast);
 Vue.use(notification);
-Vue.use(dialog);
-
+Vue.use(VueFroala);
 let locale = 'vi';
 loadLocale(locale);
 

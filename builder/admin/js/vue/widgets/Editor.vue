@@ -1,47 +1,33 @@
 <template>
   <div class="editor">
-    <ckeditor @input="$emit('input', editorData)"
-              :editor="editor"
-              v-model="editorData"
-              :config="editorConfig"
+    <froala id="edit" @input="$emit('input', model)"
+            :editor="editor"
+            tag="textarea"
+            :config="config"
+            v-model="model"
     />
   </div>
 </template>
 
 <script>
   import Icon from './Icon';
-  import CKEditor from '@ckeditor/ckeditor5-vue';
-  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+  import 'froala-editor/css/froala_editor.pkgd.min.css';
 
   export default {
     name: 'editor',
     components: {
       Icon,
-      ckeditor: CKEditor.component,
     },
-    props:{
-
-    },
+    props: {},
     computed: {},
     created() {
     },
     data() {
       return {
-        editor: ClassicEditor,
-        editorData: '',
-        editorConfig: {
-          toolbarLocation: 'bottom',
-
-          // toolbar: {
-          //   items: [
-          //     'undo',
-          //     'redo',
-          //
-          //     'bold',
-          //     'italic',
-          //     'link',
-          //   ],
-          // },
+        model: '',
+        config: {
+          placeholderText: 'Edit Your Content Here!',
+          charCounterCount: true,
         },
       };
     },
@@ -56,8 +42,7 @@
 </script>
 
 <style scoped>
-  .ck-content p{
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
+  #logo{
+    display: none !important;
   }
 </style>

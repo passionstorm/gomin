@@ -187,20 +187,21 @@
        *   1. Set internal value.
        */
       value(value) {
-        if(this.type === 'textarea'){
-          this.textAreaRow = (value.match(/\n/g)||[]).length + 1;
+        if (this.type === 'textarea') {
+          this.textAreaRow = (value.match(/\n/g) || []).length + 1;
         }
 
         this.newValue = value
       },
-      isFocused(val){
-        if(this.type !== 'textarea') return;
-        const numRow = (this.computedValue.match(/\n/g)||[]).length;
-        if(val){
+      isFocused(val) {
+        if (this.type !== 'textarea') return;
+        if (this.computedValue === undefined) return;
+        const numRow = (this.computedValue.match(/\n/g) || []).length;
+        if (val) {
           this.textAreaRow = numRow + 1;
           return;
         }
-        this.textAreaRow = numRow > 3 ? 3: numRow + 1 ;
+        this.textAreaRow = numRow > 3 ? 3 : numRow + 1;
       }
     },
     methods: {
@@ -209,7 +210,7 @@
        * by changing the type and focus the input right away.
        */
       isCheckValid(valid, errors) {
-        if(!this.rules) return false;
+        if (!this.rules) return false;
         if (!valid) {
           return false;
         }
@@ -241,11 +242,13 @@
   .icon {
     transition: opacity 1s ease-in;
   }
-  .icon-checker svg{
+
+  .icon-checker svg {
     width: 1rem !important;
     height: 1rem !important;
   }
-  textarea{
+
+  textarea {
     resize: none;
     overflow-y: hidden;
   }
